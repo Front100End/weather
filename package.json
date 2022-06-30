@@ -1,6 +1,10 @@
 {
   "name": "weatherinfo",
   "version": "1.0.0",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "react-router-dom": "^6.3.0"
+  },
   "description": "",
   "main": "index.js",
   "engines": {
@@ -14,8 +18,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "react-router-dom": "^6.3.0"
-  }
+  "license": "ISC"
 }

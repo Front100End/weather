@@ -56,17 +56,18 @@ app.post("/add-database", (req, res) => {
   res.send("post값이 정상적으로 추가 되었습니다.");
 });
 
-// const weatherAPI = () => {
-//   const x = 35.1333;
-//   const y = 129.05;
-//   axios
-//     .get(
-//       `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-//     )
-//     .then((response) => {
-//       console.log(response.data);
-//     });
-// };
+const weatherAPI = () => {
+  const x = 35.1333;
+  const y = 129.05;
+  axios
+    .get(
+      `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+    )
+    .then((response) => {
+      console.log(response.data);
+    });
+};
+weatherAPI();
 
 app.get("/weatherinfo", (req, res) => {
   const x = 35.1333;

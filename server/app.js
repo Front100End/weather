@@ -47,23 +47,23 @@ app.post("/add-database", (req, res) => {
   res.send("post값이 정상적으로 추가 되었습니다.");
 });
 
-app.get("/weatherinfo", (req, res) => {
-  const res = async () => {
-    const x = 35.1333;
-    const y = 129.05;
-    try {
-      await axios
-        .get(
-          `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-        )
-        .then((response) => {
-          console.log(response.data);
-        });
-    } catch (err) {
-      console.log("find error =>", err);
-    }
-  };
-});
+// app.get("/weatherinfo", (req, res) => {
+//   const res = async () => {
+//     const x = 35.1333;
+//     const y = 129.05;
+//     try {
+//       await axios
+//         .get(
+//           `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+//         )
+//         .then((response) => {
+//           console.log(response.data);
+//         });
+//     } catch (err) {
+//       console.log("find error =>", err);
+//     }
+//   };
+// });
 
 app.listen(PORT, () => {
   console.log("server is running");

@@ -42,13 +42,13 @@ const Home = (props) => {
         .then((json) => setLocalWeatherData((prev) => [...prev, json]));
     });
   };
-  useEffect(() => {
-    localfetch();
-  }, []);
+  // useEffect(() => {
+  //   localfetch();
+  // }, []);
 
-  useEffect(() => {
-    getfetch(mainLocationLat, mainLocationLon);
-  }, [mainLocationLat, mainLocationLon]);
+  // useEffect(() => {
+  //   getfetch(mainLocationLat, mainLocationLon);
+  // }, [mainLocationLat, mainLocationLon]);
 
   const tempRound = (props) => {
     let temp = Math.round(props - 273.15);
@@ -85,7 +85,19 @@ const Home = (props) => {
   return (
     <div className={styles.homeWrap}>
       {loading ? (
-        <h2>Loading</h2>
+        <div>
+          <h2>Loading</h2>
+          <button
+            style={{
+              width: "100px",
+              height: "100px",
+              position: "absolute",
+              left: "0",
+              right: "0",
+            }}
+            onClick={getdatabase}
+          ></button>
+        </div>
       ) : (
         <div
           className={styles.container}
@@ -112,16 +124,6 @@ const Home = (props) => {
             tempMin={tempRound(weatherData.daily[0].temp.min)}
             tempFeelsLike={tempRound(weatherData.current.feels_like)}
           ></Main>
-          <button
-            style={{
-              width: "100px",
-              height: "100px",
-              position: "absolute",
-              left: "0",
-              right: "0",
-            }}
-            onClick={getdatabase}
-          ></button>
         </div>
       )}
     </div>

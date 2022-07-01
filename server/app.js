@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 require("dotenv").config();
 const axios = require("axios");
+const cors = require("cors");
+
 const { response } = require("express");
 
 // outer API Key
@@ -16,6 +18,13 @@ const weather_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 // outer API baseUrl
 const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall?`;
+
+// cors issue
+let corsOptions = {
+  origin: "https://api.openweathermap.org",
+  Credential: true,
+};
+app.use(cors(corsOptions));
 
 const database = [
   { id: 1, title: "data1" },

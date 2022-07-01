@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 require("dotenv").config();
 const axios = require("axios");
-const cors = require("cors");
+// const cors = require("cors");
 
 const { response } = require("express");
 
@@ -19,12 +19,12 @@ const weather_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 // outer API baseUrl
 const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall?`;
 
-// cors issue
-let corsOptions = {
-  origin: "https://api.openweathermap.org",
-  Credential: true,
-};
-app.use(cors(corsOptions));
+// // cors issue
+// let corsOptions = {
+//   origin: "https://api.openweathermap.org",
+//   Credential: true,
+// };
+// app.use(cors(corsOptions));
 
 const database = [
   { id: 1, title: "data1" },
@@ -56,7 +56,20 @@ app.post("/add-database", (req, res) => {
   res.send("post값이 정상적으로 추가 되었습니다.");
 });
 
-const weatherAPI = () => {
+// const weatherAPI = () => {
+//   const x = 35.1333;
+//   const y = 129.05;
+//   axios
+//     .get(
+//       `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+//     )
+//     .then((response) => {
+//       console.log(response.data);
+//     });
+// };
+// weatherAPI();
+
+app.get("/weatherinfo", (req, res) => {
   const x = 35.1333;
   const y = 129.05;
   axios
@@ -64,22 +77,7 @@ const weatherAPI = () => {
       `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
     )
     .then((response) => {
-      console.log(response.data);
-    });
-};
-weatherAPI();
-
-app.get("/weatherinfo", (req, res) => {
-  const x = 35.1333;
-  const y = 129.05;
-  axios
-    .get(
-      `${weatherBaseUrl}lat=${String(x)}&lon=${String(
-        y
-      )}&exclude=minutely&appid=${weather_API_KEY}`
-    )
-    .then((response) => {
-      res.send(response);
+      res.send(response.data);
     });
 });
 

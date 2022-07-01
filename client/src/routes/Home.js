@@ -32,6 +32,7 @@ const Home = (props) => {
       console.log("find error =>", err);
     }
   };
+
   const localfetch = () => {
     localLocation.forEach((current) => {
       fetch(
@@ -69,6 +70,18 @@ const Home = (props) => {
     transition: "0.5s",
   };
 
+  const getdatabase = async () => {
+    try {
+      const res = await await axios
+        .get("http://localhost:3000/database/")
+        .then((response) => {
+          console.log(response);
+        });
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
+
   return (
     <div className={styles.homeWrap}>
       {loading ? (
@@ -99,6 +112,16 @@ const Home = (props) => {
             tempMin={tempRound(weatherData.daily[0].temp.min)}
             tempFeelsLike={tempRound(weatherData.current.feels_like)}
           ></Main>
+          <button
+            style={{
+              width: "100px",
+              height: "100px",
+              position: "absolute",
+              left: "0",
+              right: "0",
+            }}
+            onClick={getdatabase}
+          ></button>
         </div>
       )}
     </div>

@@ -24,6 +24,7 @@ function App() {
       console.log("find error =>", err);
     }
   };
+  //서버에서 getfetch 사용 할 것.
 
   const initState = {
     mainLocation: { lat: 35.1333, lon: 129.05 },

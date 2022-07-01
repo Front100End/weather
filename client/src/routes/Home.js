@@ -73,7 +73,7 @@ const Home = (props) => {
   const getdatabase = async () => {
     try {
       const res = await await axios
-        .get("http://localhost:3000/database/")
+        .get("https://weather-info-korea.herokuapp.com/database/")
         .then((response) => {
           console.log(response);
         });

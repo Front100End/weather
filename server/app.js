@@ -56,20 +56,30 @@ app.post("/add-database", (req, res) => {
   res.send("post값이 정상적으로 추가 되었습니다.");
 });
 
-app.get("/weatherinfo", async (req, res) => {
+// const weatherAPI = () => {
+//   const x = 35.1333;
+//   const y = 129.05;
+//   axios
+//     .get(
+//       `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+//     )
+//     .then((response) => {
+//       console.log(response.data);
+//     });
+// };
+
+app.get("/weatherinfo", (req, res) => {
   const x = 35.1333;
   const y = 129.05;
-  try {
-    await axios
-      .get(
-        `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-      )
-      .then((response) => {
-        res.send(response.data);
-      });
-  } catch (err) {
-    console.log("find error =>", err);
-  }
+  axios
+    .get(
+      `${weatherBaseUrl}lat=${String(x)}&lon=${String(
+        y
+      )}&exclude=minutely&appid=${weather_API_KEY}`
+    )
+    .then((response) => {
+      res.send(response);
+    });
 });
 
 // app.get("/weatherinfo", (req, res) => {
@@ -87,19 +97,6 @@ app.get("/weatherinfo", async (req, res) => {
 //     console.log("find error =>", err);
 //   }
 // });
-
-// const weatherAPI = () => {
-//   const x = 35.1333;
-//   const y = 129.05;
-//   axios
-//     .get(
-//       `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-//     )
-//     .then((response) => {
-//       console.log(response.data);
-//     });
-// };
-// weatherAPI();
 
 app.listen(PORT, () => {
   console.log("server is running");

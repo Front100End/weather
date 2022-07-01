@@ -9,8 +9,13 @@ const PORT = process.env.PORT || 3000;
 
 require("dotenv").config();
 const axios = require("axios");
+const { response } = require("express");
 
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+// outer API Key
+const weather_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+// outer API baseUrl
+const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall?`;
 
 const database = [
   { id: 1, title: "data1" },
@@ -25,6 +30,7 @@ app.get("/", function (req, res) {
 app.get("/database", (req, res) => {
   res.send(database);
 });
+
 app.get("/database/:id", (req, res) => {
   const id = req.params.id;
   const data = database.find((el) => el.id === Number(id));
@@ -39,6 +45,24 @@ app.post("/add-database", (req, res) => {
   });
 
   res.send("post값이 정상적으로 추가 되었습니다.");
+});
+
+app.get("/weatherinfo", (req, res) => {
+  const res = async () => {
+    const x = 35.1333;
+    const y = 129.05;
+    try {
+      await axios
+        .get(
+          `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+        )
+        .then((response) => {
+          console.log(response.data);
+        });
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
 });
 
 app.listen(PORT, () => {

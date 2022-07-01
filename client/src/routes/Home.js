@@ -72,10 +72,10 @@ const Home = (props) => {
 
   const getdatabase = async () => {
     try {
-      const res = await await axios
+      axios
         .get("https://weather-info-korea.herokuapp.com/weatherinfo")
         .then((response) => {
-          console.log(response);
+          console.log(response.current);
         });
     } catch (err) {
       console.log("find error =>", err);

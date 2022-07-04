@@ -20,15 +20,16 @@ const Search = (props) => {
       return setLoadingText("검색어를 입력하시지 않았습니다.");
     } else {
       try {
-        const response = await axios.get(
-          "https://weather-info-korea.herokuapp.com/naversearch",
-          {
+        await axios
+          .get("https://weather-info-korea.herokuapp.com/naversearch", {
             params: {
               searchKeyword: searchKey,
             },
-          }
-        );
-        setData(response.data);
+          })
+          .then((response) => {
+            console.log(response.data);
+            setData(response.data);
+          });
       } catch (err) {
         console.log("find error =>", err);
       }

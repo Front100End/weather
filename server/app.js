@@ -11,13 +11,30 @@ require("dotenv").config();
 const axios = require("axios");
 // const cors = require("cors");
 
+const cors = require("cors");
+
+const whitelist = ["http://localhost:3000"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not Allowed Origin!"));
+    }
+  },
+};
+app.use(cors(corsOptions));
+
 const { response } = require("express");
 
 // outer API Key
 const weather_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+const naverSearch_API_KEY_ID = process.env.REACT_APP_X_NCP_APIGW_API_KEY_ID;
+const naverSearch_API_KEY = process.env.REACT_APP_X_NCP_APIGW_API_KEY;
 
 // outer API baseUrl
-const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall?`;
+const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall`;
 
 // // cors issue
 // let corsOptions = {
@@ -56,46 +73,39 @@ app.post("/add-database", (req, res) => {
   res.send("post값이 정상적으로 추가 되었습니다.");
 });
 
-// const weatherAPI = () => {
-//   const x = 35.1333;
-//   const y = 129.05;
-//   axios
-//     .get(
-//       `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-//     )
-//     .then((response) => {
-//       console.log(response.data);
-//     });
-// };
-// weatherAPI();
+// --------------open API--------------
 
 app.get("/weatherinfo", (req, res) => {
-  const x = 35.1333;
-  const y = 129.05;
+  const x = req.query.x;
+  const y = req.query.y;
   axios
     .get(
-      `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
     )
     .then((response) => {
       res.send(response.data);
     });
 });
 
-// app.get("/weatherinfo", (req, res) => {
-//   const x = 35.1333;
-//   const y = 129.05;
-//   try {
-//     await axios
-//       .get(
-//         `${weatherBaseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-//       )
-//       .then((response) => {
-//         res.send(response.data);
-//       });
-//   } catch (err) {
-//     console.log("find error =>", err);
-//   }
-// });
+app.get("/naversearch", (req, res) => {
+  const value = req.query.searchKeyword;
+  axios
+    .get(`https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode`, {
+      params: {
+        query: value,
+        display: 5,
+      },
+      headers: {
+        "X-NCP-APIGW-API-KEY-ID": `${naverSearch_API_KEY_ID}`,
+        "X-NCP-APIGW-API-KEY": `${naverSearch_API_KEY}`,
+      },
+    })
+    .then((response) => {
+      res.send(response.data.addresses);
+    });
+});
+
+// --------------open API--------------
 
 app.listen(PORT, () => {
   console.log("server is running");

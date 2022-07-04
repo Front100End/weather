@@ -15,10 +15,12 @@ const Home = (props) => {
   const mainLocationLon = useSelector((state) => state.mainLocation.lat);
   const localLocation = useSelector((state) => state.localLocation);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [menuClosed, setMenuClosed] = useState(true);
   const [weatherData, setWeatherData] = useState([]);
   const [localWeatherData, setLocalWeatherData] = useState([]);
+  const [dd, setdd] = useState([]);
+  const [ee, setee] = useState([]);
 
   const getfetch = async (x, y) => {
     try {
@@ -70,33 +72,11 @@ const Home = (props) => {
     transition: "0.5s",
   };
 
-  const getdatabase = async () => {
-    try {
-      axios
-        .get("https://weather-info-korea.herokuapp.com/weatherinfo")
-        .then((response) => {
-          console.log(response.current);
-        });
-    } catch (err) {
-      console.log("find error =>", err);
-    }
-  };
-
   return (
     <div className={styles.homeWrap}>
       {loading ? (
         <div>
           <h2>Loading</h2>
-          <button
-            style={{
-              width: "100px",
-              height: "100px",
-              position: "absolute",
-              left: "0",
-              right: "0",
-            }}
-            onClick={getdatabase}
-          ></button>
         </div>
       ) : (
         <div
@@ -104,25 +84,25 @@ const Home = (props) => {
           style={menuClosed ? menuCloseStyle : menuOpenStyle}
         >
           <Menu
-            localWeatherData={localWeatherData}
-            getfetch={getfetch}
+            // localWeatherData={localWeatherData}
+            // getfetch={getfetch}
             toggleBtn={toggleBtn}
-            locationName={weatherData.timezone}
-            temp={tempRound(weatherData.current.temp)}
-            weatherIcon={weatherData.current.weather[0].icon}
+            // locationName={weatherData.timezone}
+            // temp={tempRound(weatherData.current.temp)}
+            // weatherIcon={weatherData.current.weather[0].icon}
           ></Menu>
           <Main
             toggleBtn={toggleBtn}
             menuState={menuClosed}
-            locationName={weatherData.timezone}
-            hourly={weatherData.hourly}
-            weather={weatherData.current.weather[0].main}
-            weatherDesc={weatherData.current.weather[0].description}
-            weatherIcon={weatherData.current.weather[0].icon}
-            temp={tempRound(weatherData.current.temp)}
-            tempMax={tempRound(weatherData.daily[0].temp.max)}
-            tempMin={tempRound(weatherData.daily[0].temp.min)}
-            tempFeelsLike={tempRound(weatherData.current.feels_like)}
+            // locationName={weatherData.timezone}
+            // hourly={weatherData.hourly}
+            // weather={weatherData.current.weather[0].main}
+            // weatherDesc={weatherData.current.weather[0].description}
+            // weatherIcon={weatherData.current.weather[0].icon}
+            // temp={tempRound(weatherData.current.temp)}
+            // tempMax={tempRound(weatherData.daily[0].temp.max)}
+            // tempMin={tempRound(weatherData.daily[0].temp.min)}
+            // tempFeelsLike={tempRound(weatherData.current.feels_like)}
           ></Main>
         </div>
       )}

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Home from "./routes/Home";
+import Search from "./routes/Search";
 import axios from "axios";
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route exact path={`/`} element={<Home />}></Route>
+          <Route exact path={`/search`} element={<Search />}></Route>
         </Routes>
       </Provider>
     </BrowserRouter>

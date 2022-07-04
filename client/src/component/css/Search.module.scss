@@ -1,0 +1,68 @@
+input {
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+}
+.searchWrap {
+  height: 100vh;
+  max-width: 700px;
+  background-color: black;
+  color: white;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1vh;
+
+  .searchArea {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #969696;
+    padding: 0 1vh;
+    span {
+      display: inline-block;
+      width: 10%;
+      font-size: 30px;
+      padding: 10px 15px;
+    }
+    input {
+      display: block;
+      width: 70%;
+      font-size: 22px;
+      font-weight: 400;
+      padding: 20px 10px 15px 10px;
+    }
+    button {
+      display: block;
+      width: 60px;
+      height: 5vh;
+      padding: 1vh;
+    }
+  }
+  .searchingResult {
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      button {
+        border: 1px solid white;
+        display: block;
+        width: 100%;
+        background-color: #171717;
+        color: #999;
+        margin-top: 13px;
+      }
+    }
+  }
+  .notice {
+    width: 100%;
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #999;
+  }
+}

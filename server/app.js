@@ -11,20 +11,20 @@ require("dotenv").config();
 const axios = require("axios");
 // const cors = require("cors");
 
-const cors = require("cors");
+// const cors = require("cors");
 
-const whitelist = ["http://localhost:3000"];
+// const whitelist = ["http://localhost:3000"];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not Allowed Origin!"));
-    }
-  },
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not Allowed Origin!"));
+//     }
+//   },
+// };
+// app.use(cors(corsOptions));
 
 const { response } = require("express");
 

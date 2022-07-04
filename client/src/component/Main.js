@@ -15,7 +15,7 @@ const Main = (props) => {
   const getDatabase = async () => {
     try {
       await axios
-        .get("https://weather-info-korea.herokuapp.com/database")
+        .get("https://weather-info-korea.herokuapp.com/database/")
         .then((response) => {
           console.log(response);
         });
@@ -44,7 +44,7 @@ const Main = (props) => {
   const getWeatherData = async (lat, lon) => {
     try {
       await axios
-        .get("https://weather-info-korea.herokuapp.com/weatherinfo", {
+        .get("https://weather-info-korea.herokuapp.com/weatherinfo/", {
           params: {
             x: lat,
             y: lon,

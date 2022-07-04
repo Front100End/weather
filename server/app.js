@@ -80,13 +80,11 @@ app.post("/add-database", (req, res) => {
 app.get("/weatherinfo", (req, res) => {
   const x = req.query.x;
   const y = req.query.y;
-  axios
-    .get(
-      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
-    )
-    .then((response) => {
-      res.send(response.data);
-    });
+  axios.get(
+    `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+  );
+
+  res.send(response.data);
 });
 
 app.get("/naversearch", (req, res) => {

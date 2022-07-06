@@ -109,6 +109,7 @@ app.get("/naversearch", (req, res) => {
 
 // --------------open API--------------
 
-app.listen(PORT, () => {
+app.listen(PORT, (err) => {
+  if (err) throw err;
   console.log("server is running");
 });

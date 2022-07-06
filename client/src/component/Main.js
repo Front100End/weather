@@ -11,6 +11,7 @@ const Main = (props) => {
   const [searchKey, setSearchKey] = useState("");
   const [lat, setLat] = useState();
   const [lon, setLon] = useState();
+  const [loading, setLoading] = useState(false);
 
   const getDatabase = async () => {
     try {
@@ -42,21 +43,23 @@ const Main = (props) => {
   // {
 
   const getWeatherData = async (lat, lon) => {
+    setLoading(true);
     try {
-      await axios
-        .get("https://weather-info-korea.herokuapp.com/weatherinfo", {
+      let res = await axios.get(
+        "https://weather-info-korea.herokuapp.com/weatherinfo",
+        {
           params: {
             x: lat,
             y: lon,
           },
-        })
-        .then((response) => {
-          console.log(response.data);
-          setWeather(response.data);
-        });
+        }
+      );
+      setWeather(res.data);
+      console.log(res.data);
     } catch (err) {
       console.log("find error =>", err);
     }
+    setLoading(false);
   };
   // .get("https://weather-info-korea.herokuapp.com/naversearch")
   // const getNaverData = async (searchKey) => {
@@ -99,7 +102,6 @@ const Main = (props) => {
       >
         weatherinfo
       </button>
-      <p>22</p>
 
       <Link to={{ pathname: `/search` }}>search 이동</Link>
 

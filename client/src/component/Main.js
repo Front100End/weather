@@ -46,13 +46,13 @@ const Main = (props) => {
     setLoading(true);
     try {
       let res = await axios.get(
-        "https://weather-info-korea.herokuapp.com/weatherinfo"
-        // {
-        //   params: {
-        //     x: lat,
-        //     y: lon,
-        //   },
-        // }
+        "https://weather-info-korea.herokuapp.com/weatherinfo",
+        {
+          params: {
+            x: lat,
+            y: lon,
+          },
+        }
       );
       setWeather(res.data);
       console.log(res.data);

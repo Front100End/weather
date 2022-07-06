@@ -31,7 +31,7 @@ app.use(cors());
 const { response } = require("express");
 
 // outer API Key
-const weather_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const naverSearch_API_KEY_ID = process.env.REACT_APP_X_NCP_APIGW_API_KEY_ID;
 const naverSearch_API_KEY = process.env.REACT_APP_X_NCP_APIGW_API_KEY;
 
@@ -82,7 +82,7 @@ app.get("/weatherinfo", (req, res) => {
   const y = req.query.y;
   axios
     .get(
-      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weather_API_KEY}`
+      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weatherApiKey}`
     )
     .then((response) => {
       res.send(response.data);

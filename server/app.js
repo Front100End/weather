@@ -6,12 +6,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 3000;
-
-require("dotenv").config();
 const axios = require("axios");
 
-const cors = require("cors");
-app.use(cors());
+require("dotenv").config();
 
 // const cors = require("cors");
 
@@ -82,7 +79,7 @@ app.get("/weatherinfo", (req, res) => {
   const y = req.query.y;
   axios
     .get(
-      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weatherApiKey}`
+      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
     )
     .then((response) => {
       res.send(response.data);

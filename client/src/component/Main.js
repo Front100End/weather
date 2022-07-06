@@ -15,11 +15,10 @@ const Main = (props) => {
 
   const getDatabase = async () => {
     try {
-      await axios
-        .get("https://weather-info-korea.herokuapp.com/database")
-        .then((response) => {
-          console.log(response);
-        });
+      const res = await axios.get(
+        "https://weather-info-korea.herokuapp.com/database"
+      );
+      console.log(res.data);
     } catch (err) {
       console.log("find error =>", err);
     }

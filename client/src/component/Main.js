@@ -103,7 +103,7 @@ const Main = (props) => {
         weatherinfo
       </button>
 
-      <Link to={{ pathname: `/search` }}>search 이동하기</Link>
+      <Link to={{ pathname: `/search` }}>못하겠어...</Link>
 
       <Nav
         toggleBtn={props.toggleBtn}

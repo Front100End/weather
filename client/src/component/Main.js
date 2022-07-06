@@ -80,30 +80,35 @@ const Main = (props) => {
   // };
   return (
     <div className={styles.mainWrap}>
-      <button onClick={getDatabase}>DB</button>
+      <div className={styles.db}>
+        <button onClick={getDatabase}>DB</button>
+      </div>
+      <div className={styles.weather}>
+        <input
+          type="text"
+          onChange={(e) => {
+            setLat(e.target.value);
+          }}
+          placeholder="x값"
+        />
+        <input
+          type="text"
+          onChange={(e) => {
+            setLon(e.target.value);
+          }}
+          placeholder="y값"
+        />
 
-      <input
-        type="text"
-        onChange={(e) => {
-          setLat(e.target.value);
-        }}
-      />
-      <input
-        type="text"
-        onChange={(e) => {
-          setLon(e.target.value);
-        }}
-      />
+        <button
+          onClick={(e) => {
+            getWeatherData(lat, lon);
+          }}
+        >
+          weatherinfo
+        </button>
+      </div>
 
-      <button
-        onClick={(e) => {
-          getWeatherData(lat, lon);
-        }}
-      >
-        weatherinfo
-      </button>
-
-      <Link to={{ pathname: `/search` }}>test중입니다.</Link>
+      <Link to={{ pathname: `/search` }}>naversearching</Link>
 
       <Nav
         toggleBtn={props.toggleBtn}

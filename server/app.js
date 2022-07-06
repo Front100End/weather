@@ -95,8 +95,8 @@ app.get("/naversearch", (req, res) => {
         display: 5,
       },
       headers: {
-        "X-NCP-APIGW-API-KEY-ID": `${naverSearch_API_KEY_ID}`,
-        "X-NCP-APIGW-API-KEY": `${naverSearch_API_KEY}`,
+        "X-NCP-APIGW-API-KEY-ID": `${process.env.REACT_APP_X_NCP_APIGW_API_KEY_ID}`,
+        "X-NCP-APIGW-API-KEY": `${process.env.REACT_APP_X_NCP_APIGW_API_KEY}`,
       },
     })
     .then((response) => {

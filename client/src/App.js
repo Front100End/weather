@@ -6,36 +6,20 @@ import { Provider } from "react-redux";
 import Home from "./routes/Home";
 import Search from "./routes/Search";
 import axios from "axios";
+import * as api from "./function/getOpenAPI";
 
 function App() {
-  //API ket .env
-  const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-  const baseUrl = `https://api.openweathermap.org/data/2.5/onecall?`;
-
-  const getfetch = async (x, y) => {
-    let variable;
-    try {
-      const res = await axios
-        .get(`${baseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${API_KEY}`)
-        .then((response) => {
-          variable = response.data;
-        });
-      return variable;
-    } catch (err) {
-      console.log("find error =>", err);
-    }
-  };
-  //서버에서 getfetch 사용 할 것.
-
   const initState = {
-    mainLocation: { lat: 35.1333, lon: 129.05 },
+    mainLocation: { name: "경기도 안산시", lat: 37.3236, lon: 126.8219 },
     localLocation: [
       {
+        name: "서울특별시",
         lat: 37.5683,
         lon: 126.9778,
       },
       {
-        lat: 32.1028,
+        name: "부산광역시",
+        lat: 35.1028,
         lon: 129.0403,
       },
     ],
@@ -64,6 +48,15 @@ function App() {
     }
   }
   const store = createStore(reducer);
+
+  const getDatabase = async () => {
+    try {
+      const res = await api.getDatabase();
+      console.log(res.data);
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
 
   useEffect(() => {}, []);
 

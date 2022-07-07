@@ -4,53 +4,51 @@ import Menu from "../component/Menu";
 import Main from "../component/Main";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import * as api from "../function/getOpenAPI";
 
 const Home = (props) => {
-  //API key .env
-  const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-  const baseUrl = `https://api.openweathermap.org/data/2.5/onecall?`;
-
   //redux store data(location variable)
-  const mainLocationLat = useSelector((state) => state.mainLocation.lat);
-  const mainLocationLon = useSelector((state) => state.mainLocation.lat);
-  const localLocation = useSelector((state) => state.localLocation);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [menuClosed, setMenuClosed] = useState(true);
   const [weatherData, setWeatherData] = useState([]);
   const [localWeatherData, setLocalWeatherData] = useState([]);
-  const [dd, setdd] = useState([]);
-  const [ee, setee] = useState([]);
 
-  const getfetch = async (x, y) => {
+  const mainLocationlat = useSelector((state) => state.mainLocation.lat);
+  const mainLocationlon = useSelector((state) => state.mainLocation.lon);
+  const mainLocationName = useSelector((state) => state.mainLocation.name);
+  const localLocation = useSelector((state) => state.localLocation);
+
+  const getWeatherData = async (lat, lon) => {
+    setLoading(true);
     try {
-      const res = await axios
-        .get(`${baseUrl}lat=${x}&lon=${y}&exclude=minutely&appid=${API_KEY}`)
-        .then((response) => {
-          setWeatherData(response.data);
-          setLoading(false);
-        });
+      let res = await api.getWeatherData(lat, lon);
+      setWeatherData(res.data);
+
+      console.log(res.data);
     } catch (err) {
       console.log("find error =>", err);
     }
+    setLoading(false);
   };
 
-  const localfetch = () => {
-    localLocation.forEach((current) => {
-      fetch(
-        `${baseUrl}lat=${current.lat}&lon=${current.lon}&exclude=minutely&appid=${API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((json) => setLocalWeatherData((prev) => [...prev, json]));
-    });
-  };
+  useEffect(() => {
+    getWeatherData(mainLocationlat, mainLocationlon);
+    console.log(mainLocationName);
+  }, [mainLocationlat, mainLocationlon]);
+
+  // const localfetch = () => {
+  //   localLocation.forEach((current) => {
+  //     fetch(
+  //       `${baseUrl}lat=${current.lat}&lon=${current.lon}&exclude=minutely&appid=${API_KEY}`
+  //     )
+  //       .then((res) => res.json())
+  //       .then((json) => setLocalWeatherData((prev) => [...prev, json]));
+  //   });
+  // };
   // useEffect(() => {
   //   localfetch();
   // }, []);
-
-  // useEffect(() => {
-  //   getfetch(mainLocationLat, mainLocationLon);
-  // }, [mainLocationLat, mainLocationLon]);
 
   const tempRound = (props) => {
     let temp = Math.round(props - 273.15);
@@ -76,7 +74,7 @@ const Home = (props) => {
     <div className={styles.homeWrap}>
       {loading ? (
         <div>
-          <h2>Loading</h2>
+          <h2 style={{ color: "white" }}>Loading</h2>
         </div>
       ) : (
         <div
@@ -87,6 +85,9 @@ const Home = (props) => {
             // localWeatherData={localWeatherData}
             // getfetch={getfetch}
             toggleBtn={toggleBtn}
+            tempRound={tempRound}
+            menuState={menuClosed}
+
             // locationName={weatherData.timezone}
             // temp={tempRound(weatherData.current.temp)}
             // weatherIcon={weatherData.current.weather[0].icon}
@@ -94,15 +95,13 @@ const Home = (props) => {
           <Main
             toggleBtn={toggleBtn}
             menuState={menuClosed}
-            // locationName={weatherData.timezone}
-            // hourly={weatherData.hourly}
-            // weather={weatherData.current.weather[0].main}
-            // weatherDesc={weatherData.current.weather[0].description}
-            // weatherIcon={weatherData.current.weather[0].icon}
-            // temp={tempRound(weatherData.current.temp)}
-            // tempMax={tempRound(weatherData.daily[0].temp.max)}
-            // tempMin={tempRound(weatherData.daily[0].temp.min)}
-            // tempFeelsLike={tempRound(weatherData.current.feels_like)}
+            tempRound={tempRound}
+            mainLocationName={mainLocationName}
+            currentTemp={weatherData.current}
+            todayTemp={weatherData.daily}
+            hourlyTemp={weatherData.hourly}
+            totalWeather={weatherData}
+            loading={loading}
           ></Main>
         </div>
       )}

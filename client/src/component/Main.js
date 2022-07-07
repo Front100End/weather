@@ -1,65 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./css/Main.module.scss";
 import CurrentTemp from "./Main_CurrentTemp";
 import Nav from "./Main_Nav";
+import HourTemp from "./Main_HourlyTemp";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import * as api from "../function/getOpenAPI";
+import { useSelector } from "react-redux";
 
 const Main = (props) => {
-  const [weather, setWeather] = useState("");
-  const [naver, setNaver] = useState("");
-  const [searchKey, setSearchKey] = useState("");
-  const [lat, setLat] = useState();
-  const [lon, setLon] = useState();
-  const [loading, setLoading] = useState(false);
+  // const [weatherData, setWeatherData] = useState("");
+  // const [naver, setNaver] = useState("");
+  // const [searchKey, setSearchKey] = useState("");
+  // const [loading, setLoading] = useState(false);
 
-  const getDatabase = async () => {
-    try {
-      const res = await axios.get(
-        "https://weather-info-korea.herokuapp.com/database"
-      );
-      console.log(res.data);
-    } catch (err) {
-      console.log("find error =>", err);
-    }
-  };
-  // .get("https://weather-info-korea.herokuapp.com/weatherinfo")
-  // const getWeatherData = async () => {
-  //   const x = 126.8;
-  //   const y = 38.8;
+  // const mainLocationlat = useSelector((state) => state.mainLocation.lat);
+  // const mainLocationlon = useSelector((state) => state.mainLocation.lon);
 
+  // const getDatabase = async () => {
   //   try {
-  //     await axios
-  //       .get(`http://localhost:5000/weatherinfo/:x=${x}:y=${y}`)
-  //       .then((response) => {
-  //         console.log(response.data.current.temp);
-  //         setWeather(response.data.current.temp);
-  //       });
+  //     const res = await api.getDatabase();
+  //     console.log(res.data);
   //   } catch (err) {
   //     console.log("find error =>", err);
   //   }
   // };
-  // {
+  // const getWeatherData = async (lat, lon) => {
+  //   setLoading(true);
+  //   try {
+  //     let res = await api.getWeatherData(lat, lon);
+  //     setWeatherData(res.data);
 
-  const getWeatherData = async (lat, lon) => {
-    setLoading(true);
-    try {
-      let res = await axios.get(
-        "https://weather-info-korea.herokuapp.com/weatherinfo",
-        {
-          params: {
-            x: lat,
-            y: lon,
-          },
-        }
-      );
-      setWeather(res.data);
-      console.log(res.data);
-    } catch (err) {
-      console.log("find error =>", err);
-    }
-    setLoading(false);
-  };
+  //     console.log(res.data);
+  //   } catch (err) {
+  //     console.log("find error =>", err);
+  //   }
+  //   setLoading(false);
+  // };
+
+  // useEffect(() => {
+  //   console.log(props.currentTemp);
+  //   console.log(props.todayTemp);
+  //   console.log(props.hourlyTemp);
+  // }, []);
+
+  // const getWeatherData = async (lat, lon) => {
+  //   setLoading(true);
+  //   try {
+  //     let res = await axios.get(
+  //       "https://weather-info-korea.herokuapp.com/weatherinfo",
+  //       {
+  //         params: {
+  //           x: lat,
+  //           y: lon,
+  //         },
+  //       }
+  //     );
+  //     setWeather(res.data);
+  //     console.log(res.data);
+  //   } catch (err) {
+  //     console.log("find error =>", err);
+  //   }
+  //   setLoading(false);
+  // };
   // .get("https://weather-info-korea.herokuapp.com/naversearch")
   // const getNaverData = async (searchKey) => {
   //   try {
@@ -79,55 +82,21 @@ const Main = (props) => {
   // };
   return (
     <div className={styles.mainWrap}>
-      <div className={styles.db}>
-        <button onClick={getDatabase}>DB</button>
-      </div>
-      <div className={styles.weather}>
-        <input
-          type="text"
-          onChange={(e) => {
-            setLat(e.target.value);
-          }}
-          placeholder="x값"
-        />
-        <input
-          type="text"
-          onChange={(e) => {
-            setLon(e.target.value);
-          }}
-          placeholder="y값"
-        />
+      {/* <Link to={{ pathname: `/search` }}>naversearching</Link> */}
 
-        <button
-          onClick={(e) => {
-            getWeatherData(lat, lon);
-          }}
-        >
-          weatherinfo
-        </button>
-      </div>
-
-      <Link to={{ pathname: `/search` }}>naversearching</Link>
-
-      <Nav
-        toggleBtn={props.toggleBtn}
-        // menuState={props.menuState}
-        // innerWidth={props.innerWidth}
-        // innerHeight={props.innerHeight}
-      ></Nav>
+      <Nav toggleBtn={props.toggleBtn} menuState={props.menuState}></Nav>
       <CurrentTemp
-      // tempRound={props.tempRound}
-      // innerWidth={props.innerWidth}
-      // innerHeight={props.innerHeight}
-      // locationName={props.locationName}
-      // tempMax={props.tempMax}
-      // tempMin={props.tempMin}
-      // temp={props.temp}
-      // tempFeelsLike={props.tempFeelsLike}
-      // weather={props.weather}
-      // weatherDesc={props.weatherDesc}
-      // weatherIcon={props.weatherIcon}
+        tempRound={props.tempRound}
+        mainLocationName={props.mainLocationName}
+        currentTemp={props.currentTemp}
+        todayTemp={props.todayTemp}
+        totalWeather={props.totalWeather}
+        loading={props.loading}
       ></CurrentTemp>
+      <HourTemp
+        tempRound={props.tempRound}
+        hourlyTemp={props.hourlyTemp}
+      ></HourTemp>
     </div>
   );
 };

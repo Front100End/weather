@@ -40,6 +40,35 @@ const Search = (props) => {
       }
     }
   };
+
+  // const getNaverData = async (searchKey) => {
+  //   setData([]);
+  //   setLoading(true);
+  //   setLoadingText("Loading...");
+  //   if (value === "") {
+  //     return setLoadingText("검색어를 입력하시지 않았습니다.");
+  //   } else {
+  //     try {
+  //       await axios
+  //         .get("https://weather-info-korea.herokuapp.com/naversearch", {
+  //           params: {
+  //             searchKeyword: searchKey,
+  //           },
+  //         })
+  //         .then((response) => {
+  //           console.log(response.data);
+  //           setData(response.data);
+  //         });
+  //     } catch (err) {
+  //       console.log("find error =>", err);
+  //     }
+  //     if (data !== undefined || data.length !== 0) {
+  //       setLoading(false);
+  //     } else {
+  //       alert("검색 정보가 없습니다.");
+  //     }
+  //   }
+  // };
   return (
     <div className={styles.searchWrap}>
       <form className={styles.searchArea}>

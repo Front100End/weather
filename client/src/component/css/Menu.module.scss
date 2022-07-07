@@ -1,5 +1,104 @@
 .menuWrap {
   width: 80%;
   height: 100vh;
-  background-color: wheat;
+  background-color: #757575;
+  border: 2px solid black;
+}
+
+.menuNavWrap {
+  display: flex;
+  .gear {
+    margin: 10px;
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+  }
+}
+
+.menuSectionWrap {
+  .oftenLocalWrap {
+    > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 10px 10px 10px;
+      padding: 0 15px;
+    }
+    > p {
+      margin: 10px 10px;
+      padding: 0 15px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .starIcon {
+    font-size: 25px;
+    margin-right: 10px;
+  }
+  .questionIcon {
+    font-size: 25px;
+    margin-right: 10px;
+  }
+
+  .oftenLocalTitle span {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: "Gowun Batang", serif;
+  }
+
+  .localTitle {
+    margin: 0 10px;
+    padding: 15px 15px 0px 15px;
+    .locationIcon {
+      font-size: 20px;
+      padding-right: 15px;
+    }
+    span {
+      font-size: 20px;
+      font-family: "Gowun Batang", serif;
+    }
+  }
+
+  .localWrap {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0 none;
+    width: 100%;
+    background-color: transparent;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 20px 30px;
+    h3 {
+      font-size: 20px;
+    }
+    .weatherWrap {
+      font-size: 20px;
+    }
+  }
+
+  .weatherWrap {
+    display: flex;
+  }
+
+  .localSettingBtn {
+    display: block;
+    width: 80%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    text-decoration: none;
+    border-radius: 15px;
+    border: 0 none;
+    background-color: #9e9e9e;
+    color: #fff;
+    margin: 0 auto;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Gowun Batang", serif;
+  }
 }

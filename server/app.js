@@ -5,7 +5,7 @@ app.use(express.static("build"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const axios = require("axios");
 
 require("dotenv").config();
@@ -86,6 +86,18 @@ app.get("/weatherinfo", (req, res) => {
     });
 });
 
+// app.get("/weatherinfo", (req, res) => {
+//   const x = req.query.x;
+//   const y = req.query.y;
+//   axios
+//     .get(
+//       `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weatherApiKey}`
+//     )
+//     .then((response) => {
+//       res.send(response.data);
+//     });
+// });
+
 app.get("/naversearch", (req, res) => {
   const value = req.query.searchKeyword;
   axios
@@ -103,6 +115,24 @@ app.get("/naversearch", (req, res) => {
       res.send(response.data.addresses);
     });
 });
+
+// app.get("/naversearch", (req, res) => {
+//   const value = req.query.searchKeyword;
+//   axios
+//     .get(`https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode`, {
+//       params: {
+//         query: value,
+//         display: 5,
+//       },
+//       headers: {
+//         "X-NCP-APIGW-API-KEY-ID": `${naverSearch_API_KEY_ID}`,
+//         "X-NCP-APIGW-API-KEY": `${naverSearch_API_KEY}`,
+//       },
+//     })
+//     .then((response) => {
+//       res.send(response.data.addresses);
+//     });
+// });
 
 // --------------open API--------------
 

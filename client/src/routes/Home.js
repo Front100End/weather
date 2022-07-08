@@ -8,34 +8,47 @@ import * as api from "../function/getOpenAPI";
 
 const Home = (props) => {
   //redux store data(location variable)
+  const mainLocationLat = useSelector((state) => state.mainLocation.lat);
+  const mainLocationLon = useSelector((state) => state.mainLocation.lon);
+  const mainLocationName = useSelector((state) => state.mainLocation.name);
+  const localLocation = useSelector((state) => state.localLocation);
 
   const [loading, setLoading] = useState(true);
-  const [menuClosed, setMenuClosed] = useState(true);
+  const [menuClosed, setMenuClosed] = useState(false);
   const [weatherData, setWeatherData] = useState([]);
   const [localWeatherData, setLocalWeatherData] = useState([]);
 
-  const mainLocationlat = useSelector((state) => state.mainLocation.lat);
-  const mainLocationlon = useSelector((state) => state.mainLocation.lon);
-  const mainLocationName = useSelector((state) => state.mainLocation.name);
-  const localLocation = useSelector((state) => state.localLocation);
+  const localfetch = () => {
+    localLocation.forEach(async (current) => {
+      try {
+        let res = await api.getWeatherData(current.lat, current.lon);
+        let addres = res.data;
+        addres.name = current.name;
+        setLocalWeatherData((prev) => [...prev, addres]);
+      } catch (error) {
+        console.log("error => " + error);
+      }
+    });
+  };
 
   const getWeatherData = async (lat, lon) => {
     setLoading(true);
     try {
       let res = await api.getWeatherData(lat, lon);
       setWeatherData(res.data);
-
-      console.log(res.data);
     } catch (err) {
       console.log("find error =>", err);
     }
     setLoading(false);
   };
+  useEffect(() => {
+    localfetch();
+  }, []);
 
   useEffect(() => {
-    getWeatherData(mainLocationlat, mainLocationlon);
-    console.log(mainLocationName);
-  }, [mainLocationlat, mainLocationlon]);
+    getWeatherData(mainLocationLat, mainLocationLon);
+    toggleBtn();
+  }, [mainLocationLat, mainLocationLon]);
 
   // const localfetch = () => {
   //   localLocation.forEach((current) => {
@@ -58,7 +71,6 @@ const Home = (props) => {
   //menu open close
   const toggleBtn = (e) => {
     setMenuClosed((current) => !current);
-    console.log(menuClosed);
   };
 
   const menuOpenStyle = {
@@ -87,6 +99,10 @@ const Home = (props) => {
             toggleBtn={toggleBtn}
             tempRound={tempRound}
             menuState={menuClosed}
+            loading={loading}
+            localWeatherData={localWeatherData}
+            mainLocationName={mainLocationName}
+            currentTemp={weatherData.current}
 
             // locationName={weatherData.timezone}
             // temp={tempRound(weatherData.current.temp)}

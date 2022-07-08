@@ -8,14 +8,13 @@ import styles from "./css/Menu.module.scss";
 
 const Menu_Section = (props) => {
   const dispatch = useDispatch();
-  const changeMainLocation = (lat, lon) => ({
+  const changeMainLocation = (name, lat, lon) => ({
     type: "changeMainLocation",
+    name: name,
     lat: lat,
     lon: lon,
   });
-  useEffect(() => {
-    console.log(props.localWeatherData);
-  }, []);
+
   return (
     <div className={styles.menuSectionWrap}>
       <section className={styles.oftenLocalWrap}>
@@ -29,7 +28,10 @@ const Menu_Section = (props) => {
             icon={faCircleQuestion}
           />
         </div>
-        <p className={styles.oftenLocalArea}>경기도 안산시청</p>
+        <div>
+          <h4 className={styles.oftenLocalArea}>{props.mainLocationName}</h4>
+          <span>{props.tempRound(props.currentTemp.temp)}°</span>
+        </div>
       </section>
 
       <section>
@@ -47,10 +49,12 @@ const Menu_Section = (props) => {
               key={idx}
               className={styles.localWrap}
               onClick={() =>
-                dispatch(changeMainLocation(current.lat, current.lon))
+                dispatch(
+                  changeMainLocation(current.name, current.lat, current.lon)
+                )
               }
             >
-              <h3>{current.name}</h3>
+              <h4>{current.name}</h4>
               <div className={styles.weatherWrap}>
                 {props.tempRound(current.current.temp)}°
               </div>
@@ -66,7 +70,6 @@ const Menu_Section = (props) => {
         >
           지역관리
         </Link>
-        {/* <button className={styles.localSettingBtn}>지역 관리</button> */}
       </section>
     </div>
   );

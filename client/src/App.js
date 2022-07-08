@@ -5,6 +5,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Home from "./routes/Home";
 import Search from "./routes/Search";
+import LocalManagement from "./routes/LocalManagement";
 import axios from "axios";
 import * as api from "./function/getOpenAPI";
 
@@ -26,12 +27,13 @@ function App() {
   };
 
   function reducer(state = initState, action) {
-    const tempState = { ...initState };
+    let tempState = { ...initState };
     switch (action.type) {
       case "changeMainLocation": {
         return {
           tempState,
           mainLocation: {
+            name: action.name,
             lat: action.lat,
             lon: action.lon,
           },
@@ -40,7 +42,9 @@ function App() {
       case "addLocalData": {
         return {
           tempState,
-          localLocation: [...{ lat: action.lat, lon: action.lon }],
+          localLocation: [
+            ...{ name: action.name, lat: action.lat, lon: action.lon },
+          ],
         };
       }
       default:
@@ -65,7 +69,16 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route exact path={`/`} element={<Home />}></Route>
-          <Route exact path={`/search`} element={<Search />}></Route>
+          <Route
+            exact
+            path={`/localmanagement`}
+            element={<LocalManagement />}
+          ></Route>
+          <Route
+            exact
+            path={`/localmanagement/search`}
+            element={<Search />}
+          ></Route>
         </Routes>
       </Provider>
     </BrowserRouter>

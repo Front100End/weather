@@ -4,16 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import styles from "../component/css/Search.module.scss";
-
+import { useDispatch } from "react-redux";
 const Search = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState("");
-  const [data, setData] = useState([]);
+  const [localdata, setLocalData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingText, setLoadingText] = useState("");
 
   const getNaverData = async (searchKey) => {
-    setData([]);
+    setLocalData([]);
     setLoading(true);
     setLoadingText("Loading...");
     if (value === "") {
@@ -21,25 +23,32 @@ const Search = (props) => {
     } else {
       try {
         await axios
-          .get("https://weather-info-korea.herokuapp.com/naversearch", {
+          .get("http://localhost:5000/naversearch", {
             params: {
               searchKeyword: searchKey,
             },
           })
           .then((response) => {
             console.log(response.data);
-            setData(response.data);
+            setLocalData(response.data);
           });
       } catch (err) {
         console.log("find error =>", err);
       }
-      if (data !== undefined || data.length !== 0) {
+      if (localdata !== undefined || localdata.length !== 0) {
         setLoading(false);
       } else {
         alert("검색 정보가 없습니다.");
       }
     }
   };
+
+  const addLocalData = (name, lat, lon) => ({
+    type: "addLocalData",
+    name: name,
+    lat: lat,
+    lon: lon,
+  });
 
   // const getNaverData = async (searchKey) => {
   //   setData([]);
@@ -101,18 +110,22 @@ const Search = (props) => {
           <span>{loadingText}</span>
         ) : (
           <div>
-            {data.map((current, idx) => (
-              <button
-                key={idx}
-                onClick={(e) => {
-                  console.log({ current });
-                }}
-              >
-                <h2>{current.roadAddress}</h2>
-                <h3>x좌표 : {current.x}</h3>
-                <h3>y좌표 : {current.y}</h3>
-              </button>
-            ))}
+            {localdata.map((current, idx) => {
+              return (
+                <button
+                  key={idx}
+                  onClick={() =>
+                    dispatch(
+                      addLocalData(current.roadAddress, current.x, current.y)
+                    )
+                  }
+                >
+                  <h2>{current.roadAddress}</h2>
+                  <h3>x좌표 : {current.x}</h3>
+                  <h3>y좌표 : {current.y}</h3>
+                </button>
+              );
+            })}
           </div>
         )}
       </div>

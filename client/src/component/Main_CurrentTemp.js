@@ -12,7 +12,6 @@ const Main_CurrentTemp = (props) => {
     dayFetch();
     timeFetch();
     weatherIconRender();
-    console.log(props.mainLocationName);
   }, []);
 
   const dayFetch = () => {
@@ -39,44 +38,44 @@ const Main_CurrentTemp = (props) => {
   };
   return (
     <React.Fragment>
-      {props.loading ? (
+      {/* {props.loading ? (
         <div>로딩중입니다.</div>
-      ) : (
-        <article className={styles.mainCurrentWrap}>
-          <div className={styles.container}>
-            <div className={styles.info}>
-              <h2 className={styles.maintemp}>
-                {props.tempRound(props.currentTemp.temp)}°
-              </h2>
-              <p className={styles.locationName}>{props.mainLocationName}</p>
+      ) : ( */}
+      <article className={styles.mainCurrentWrap}>
+        <div className={styles.container}>
+          <div className={styles.info}>
+            <h2 className={styles.maintemp}>
+              {props.tempRound(props.currentTemp.temp)}°
+            </h2>
+            <p className={styles.locationName}>{props.mainLocationName}</p>
 
-              <div className={styles.tempWrap}>
-                <span className={styles.tempMin}>
-                  {props.tempRound(props.todayTemp[0].temp.min)}° /
-                </span>
-                <span className={styles.tempMax}>
-                  {props.tempRound(props.todayTemp[0].temp.max)}°
-                </span>
-                <span className={styles.sensibleTemp}>
-                  체감온도 {props.tempRound(props.currentTemp.feels_like)}°
-                </span>
-              </div>
-
-              <div className={styles.dateWrap}>
-                <span className={styles.date}>{day},</span>
-                <span className={styles.time}>
-                  {timeAMPM}
-                  {time.hours}:{time.minutes}
-                </span>
-              </div>
+            <div className={styles.tempWrap}>
+              <span className={styles.tempMin}>
+                {props.tempRound(props.todayTemp[0].temp.min)}° /
+              </span>
+              <span className={styles.tempMax}>
+                {props.tempRound(props.todayTemp[0].temp.max)}°
+              </span>
+              <span className={styles.sensibleTemp}>
+                체감온도 {props.tempRound(props.currentTemp.feels_like)}°
+              </span>
             </div>
-            <img
-              src={weatherIconRender(props.currentTemp.weather[0].icon)}
-              alt="weatherIcon error"
-            />
+
+            <div className={styles.dateWrap}>
+              <span className={styles.date}>{day},</span>
+              <span className={styles.time}>
+                {timeAMPM}
+                {time.hours}:{time.minutes}
+              </span>
+            </div>
           </div>
-        </article>
-      )}
+          <img
+            src={weatherIconRender(props.currentTemp.weather[0].icon)}
+            alt="weatherIcon error"
+          />
+        </div>
+      </article>
+      {/* )} */}
     </React.Fragment>
   );
 };

@@ -38,9 +38,6 @@ const Main_CurrentTemp = (props) => {
   };
   return (
     <React.Fragment>
-      {/* {props.loading ? (
-        <div>로딩중입니다.</div>
-      ) : ( */}
       <article className={styles.mainCurrentWrap}>
         <div className={styles.container}>
           <div className={styles.info}>

@@ -1,7 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { debounce } from "lodash";
 import styles from "./css/Main.module.scss";
 
 const Main_HourlyTemp = (props) => {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const ResizedComponent = () => {
+    const resizeHandler = debounce(() => {
+      if (window.innerWidth >= 700) {
+        setWindowSize({
+          width: "700px",
+          height: window.innerHeight,
+        });
+      } else {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      console.log(windowSize);
+    }, 100);
+    useEffect(() => {
+      window.addEventListener("resize", resizeHandler);
+      return () => {
+        window.removeEventListener("resize", resizeHandler);
+      };
+    }, []);
+  };
+  ResizedComponent();
+
   let hourly = props.hourlyTemp.slice(1, 19);
 
   const unixTimeTransform = (dt) => {
@@ -30,7 +59,10 @@ const Main_HourlyTemp = (props) => {
   }, []);
   return (
     <React.Fragment>
-      <ul className={styles.mainHourlyWrap}>
+      <ul
+        className={styles.mainHourlyWrap}
+        style={{ width: `${windowSize.width * 0.9}px` }}
+      >
         {hourly.map((current, idx) => {
           return (
             <li key={idx}>

@@ -82,8 +82,14 @@ const Main = (props) => {
   // };
   return (
     <div className={styles.mainWrap}>
-      {/* <Link to={{ pathname: `/search` }}>naversearching</Link> */}
-
+      {props.menuState ? (
+        ""
+      ) : (
+        <aside
+          className={styles.backBtn}
+          onClick={(e) => props.toggleBtn()}
+        ></aside>
+      )}
       <Nav toggleBtn={props.toggleBtn} menuState={props.menuState}></Nav>
       <CurrentTemp
         tempRound={props.tempRound}

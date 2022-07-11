@@ -1,9 +1,22 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 .mainWrap {
   position: relative;
   width: 100%;
   height: 100vh;
+  max-width: 700px;
   border: 2px solid black;
-  background-color: #fff;
+  background: linear-gradient(to top, #baddf9 0%, #eeffff 90%);
+  > aside {
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 .mainNavWrap {
   > span {
@@ -19,10 +32,10 @@
   margin: 25% auto 15px auto;
   padding: 20px 10px 25px 10px;
   border-radius: 14px;
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
-    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
-    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  // background-color: #fff;
+  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+  //   0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+  //   0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   .container {
     display: flex;
     justify-content: center;
@@ -52,37 +65,39 @@
   }
 }
 
-// .mainHourlyWrap {
-//   display: flex;
-//   flex-wrap: nowrap;
-//   overflow-x: scroll;
-//   max-width: 90%;
-//   margin: 0 auto;
-//   padding: 20px 10px 25px 10px;
-//   border-radius: 14px;
-//   background-color: #fff;
-//   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
-//     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
-//     0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
-//   li {
-//     display: inline-block;
-//     vertical-align: middle;
-//     text-align: center;
-//     padding: 5px;
-//     span {
-//       font-size: 12px;
-//       white-space: nowrap;
-//     }
-//     img {
-//     }
-//     em {
-//       font-size: 17px;
-//       font-weight: 500;
-//       font-style: normal;
-//     }
-//     p {
-//       font-size: 15px;
-//       margin-top: 8px;
-//     }
-//   }
-// }
+.mainHourlyWrap {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px 10px 20px 10px;
+  border-radius: 14px;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  li {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+    span {
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    img {
+    }
+    em {
+      font-size: 17px;
+      font-weight: 500;
+      font-style: normal;
+    }
+    p {
+      font-size: 15px;
+      margin-top: 8px;
+    }
+  }
+}
+// #baddf9
+// #eeffff 90;

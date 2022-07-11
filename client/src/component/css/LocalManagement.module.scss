@@ -1,6 +1,7 @@
 .localManagementWrap {
   background-color: #373737;
   height: 100vh;
+
   .navWrap {
     display: flex;
     align-items: center;
@@ -23,6 +24,10 @@
     .rightContents {
       display: flex;
       align-items: center;
+      a {
+        text-decoration: none;
+        color: #fff;
+      }
       > span {
         font-size: 2em;
         margin: 0 5px;
@@ -40,18 +45,19 @@
 
   .localManagementSectionWrap {
     padding: 0 5vw;
-    .oftenTitle {
+    .Title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin: 8px 0;
       color: #8e8e8e;
       padding: 0 3vw;
+
       > em {
         font-style: normal;
       }
     }
-    .oftenLocalArea {
+    .LocalArea {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -93,6 +99,9 @@
           }
         }
       }
+    }
+    ul:nth-child(2) {
+      margin-top: 10px;
     }
   }
 }

@@ -44,13 +44,13 @@ const LocalManagement_Section = (props) => {
   //   const currentTime = `${date.getMonth()}월${date.getDay()}일 ${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
   return (
     <div className={styles.localManagementSectionWrap}>
-      <h3 className={styles.oftenTitle}>
+      <h3 className={styles.Title}>
         <em>즐겨찾는 지역</em>
         <span>
           <FontAwesomeIcon icon={faCircleInfo} />
         </span>
       </h3>
-      <ul className={styles.oftenLocalArea}>
+      <ul className={styles.LocalArea}>
         <li>
           <address>{props.mainLocationName}</address>
           <p>
@@ -78,6 +78,37 @@ const LocalManagement_Section = (props) => {
           </div>
         </li>
       </ul>
+      <h3 className={styles.Title}>다른 지역</h3>
+      <div>
+        {props.localWeatherData.map((current, idx) => {
+          return (
+            <ul className={styles.LocalArea} key={idx}>
+              <li>
+                <address>{current.name}</address>
+                <p>
+                  {month}월{date}일 {day} {timeAMPM} {time.hours}:{time.minutes}
+                </p>
+              </li>
+              <li>
+                <div>
+                  <img
+                    src={props.weatherIconRender(
+                      current.current.weather[0].icon
+                    )}
+                    alt="main weather icon error"
+                  />
+                  <div>
+                    <p>{props.tempRound(current.current.temp)}°</p>
+                    <span>{props.tempRound(current.daily[0].temp.max)}°</span>
+                    <span>/</span>
+                    <span>{props.tempRound(current.daily[0].temp.min)}°</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          );
+        })}
+      </div>
     </div>
   );
 };

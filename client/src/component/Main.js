@@ -80,6 +80,38 @@ const Main = (props) => {
   //     console.log("find error =>", err);
   //   }
   // };
+  const getDatabase = async () => {
+    try {
+      let res = await api.getDatabase();
+      console.log(res.data);
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
+  const postDatabase = async () => {
+    try {
+      let res = await api.postDatabase("경기도 안산시", 38.2342, 128.123);
+      console.log(res.data);
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
+  const putDatabase = async () => {
+    try {
+      let res = await api.putDatabase("경기도 수원시", 37.2342, 128.123, 5);
+      console.log(res.data);
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
+  const deleteDatabase = async () => {
+    try {
+      let res = await api.deleteDatabase(4);
+      console.log(res.data);
+    } catch (err) {
+      console.log("find error =>", err);
+    }
+  };
   return (
     <div className={styles.mainWrap}>
       {props.menuState ? (
@@ -103,6 +135,10 @@ const Main = (props) => {
         tempRound={props.tempRound}
         hourlyTemp={props.hourlyTemp}
       ></HourTemp>
+      <button onClick={(e) => getDatabase()}>get버튼</button>
+      <button onClick={(e) => postDatabase()}>post버튼</button>
+      <button onClick={(e) => putDatabase()}>put버튼</button>
+      <button onClick={(e) => deleteDatabase()}>delete버튼</button>
     </div>
   );
 };

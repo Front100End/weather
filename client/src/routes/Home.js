@@ -18,6 +18,11 @@ const Home = (props) => {
   const [weatherData, setWeatherData] = useState([]);
   const [localWeatherData, setLocalWeatherData] = useState([]);
 
+  // const mainLocationFetch = async() => {
+  //   const res = await api.getDatabase();
+
+  // }
+
   const localfetch = () => {
     localLocation.forEach(async (current) => {
       try {

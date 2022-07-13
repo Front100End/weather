@@ -20,7 +20,6 @@ const Main_HourlyTemp = (props) => {
           height: window.innerHeight,
         });
       }
-      console.log(windowSize);
     }, 100);
     useEffect(() => {
       window.addEventListener("resize", resizeHandler);

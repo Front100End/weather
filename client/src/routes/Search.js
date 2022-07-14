@@ -5,6 +5,9 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import styles from "../component/css/Search.module.scss";
 import { useDispatch } from "react-redux";
+import { setLocalLocationData } from "../module/weatherReducer";
+import * as api from "../function/getOpenAPI";
+
 const Search = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -114,11 +117,25 @@ const Search = (props) => {
               return (
                 <button
                   key={idx}
-                  onClick={() =>
-                    dispatch(
-                      addLocalData(current.roadAddress, current.x, current.y)
-                    )
-                  }
+                  onClick={async () => {
+                    // console.log(current);
+                    try {
+                      let res = await api.postlocalData(
+                        current.roadAddress,
+                        current.y,
+                        current.x
+                      );
+                      let addLocaldata = await api.getWeatherData(
+                        current.y,
+                        current.x
+                      );
+                      addLocaldata.data.name = current.roadAddress;
+                      console.log(addLocaldata.data);
+                      dispatch(setLocalLocationData(addLocaldata.data));
+                    } catch (err) {
+                      console.log(`error 발생 => ${err}`);
+                    }
+                  }}
                 >
                   <h2>{current.roadAddress}</h2>
                   <h3>x좌표 : {current.x}</h3>

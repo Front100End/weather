@@ -36,9 +36,6 @@ const LocalManagement_Section = (props) => {
   useEffect(() => {
     dayFetch();
     timeFetch();
-    console.log(props.weatherData);
-    console.log(props.localWeatherData);
-    console.log(props.mainLocationName);
   }, []);
   //   const date = new Date();
   //   const currentTime = `${date.getMonth()}월${date.getDay()}일 ${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;

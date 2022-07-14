@@ -78,6 +78,45 @@ app.delete("/database/:id", async (req, res) => {
     console.log((error = err));
   }
 });
+
+app.get("/localdata", async (req, res) => {
+  const [rows, fields] = await connection.execute(
+    "SELECT * FROM locallocation"
+  );
+  console.log("rows :", rows);
+  res.send(rows);
+});
+app.post("/localdata", async (req, res) => {
+  const { name, lat, lon } = req.body;
+  console.log(name);
+  const [rows, fields] = await connection.execute(
+    `INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)`,
+    [name, lat, lon]
+  );
+  res.send("post값이 정상적으로 추가 되었습니다.");
+});
+
+app.put("/localdata", async (req, res) => {
+  const { name, lat, lon, id } = req.body;
+  const [rows, fields] = await connection.execute(
+    `UPDATE locallocation SET name=?,lat=?,lon=? WHERE id =?`,
+    [name, lat, lon, id]
+  );
+  res.send("put값이 정상적으로 업데이트 되었습니다.");
+});
+
+app.delete("/localdata/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const [rows, fields] = await connection.execute(
+      `DELETE FROM locallocation WHERE id=?`,
+      [id]
+    );
+    res.send("delete 성공");
+  } catch (err) {
+    console.log((error = err));
+  }
+});
 // ------------database mysql -------------
 
 // app.get("/database/:id", (req, res) => {

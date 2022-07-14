@@ -25,6 +25,23 @@ export const getWeatherData = (lat, lon) =>
     },
   });
 
+export const getlocalData = () => axios.get("http://localhost:5000/localdata");
+export const postlocalData = (name, lat, lon) =>
+  axios.post("http://localhost:5000/localdata", {
+    name: name,
+    lat: lat,
+    lon: lon,
+  });
+export const putlocalData = (name, lat, lon, id) =>
+  axios.put("http://localhost:5000/localdata", {
+    name: name,
+    lat: lat,
+    lon: lon,
+    id: id,
+  });
+export const deletelocalData = (id) =>
+  axios.delete(`http://localhost:5000/localdata/${id}`);
+
 // export const getDatabase = () =>
 //   axios.get("https://weather-info-korea.herokuapp.com/database");
 // export const postDatabase = (name, lat, lon) =>

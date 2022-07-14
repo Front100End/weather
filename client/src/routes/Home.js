@@ -8,52 +8,60 @@ import * as api from "../function/getOpenAPI";
 
 const Home = (props) => {
   //redux store data(location variable)
-  const mainLocationLat = useSelector((state) => state.mainLocation.lat);
-  const mainLocationLon = useSelector((state) => state.mainLocation.lon);
-  const mainLocationName = useSelector((state) => state.mainLocation.name);
-  const localLocation = useSelector((state) => state.localLocation);
+  // const mainLocationLat = useSelector((state) => state.mainLocationData[0].lat);
+  // const mainLocationLon = useSelector((state) => state.mainLocationData[0].lon);
+  // const mainLocationName = useSelector(
+  //   (state) => state.mainLocationData[0].name
+  // );
+  const [reRender, setReRender] = useState(1);
+  const mainLocaitonData = useSelector((state) => state.mainLocationData[0]);
+  const localLocationData = useSelector((state) => state.localLocationData);
+
+  useEffect(() => {
+    setReRender((current) => +1);
+  }, [mainLocaitonData, localLocationData]);
 
   const [loading, setLoading] = useState(true);
-  const [menuClosed, setMenuClosed] = useState(false);
-  const [weatherData, setWeatherData] = useState([]);
-  const [localWeatherData, setLocalWeatherData] = useState([]);
+  const [menuClosed, setMenuClosed] = useState(true);
+  // const [weatherData, setWeatherData] = useState([]);
+  // const [localWeatherData, setLocalWeatherData] = useState([]);
 
   // const mainLocationFetch = async() => {
   //   const res = await api.getDatabase();
 
   // }
 
-  const localfetch = () => {
-    localLocation.forEach(async (current) => {
-      try {
-        let res = await api.getWeatherData(current.lat, current.lon);
-        let addres = res.data;
-        addres.name = current.name;
-        setLocalWeatherData((prev) => [...prev, addres]);
-      } catch (error) {
-        console.log("error => " + error);
-      }
-    });
-  };
+  // const localfetch = () => {
+  //   localLocation.forEach(async (current) => {
+  //     try {
+  //       let res = await api.getWeatherData(current.lat, current.lon);
+  //       let addres = res.data;
+  //       addres.name = current.name;
+  //       setLocalWeatherData((prev) => [...prev, addres]);
+  //     } catch (error) {
+  //       console.log("error => " + error);
+  //     }
+  //   });
+  // };
 
-  const getWeatherData = async (lat, lon) => {
-    setLoading(true);
-    try {
-      let res = await api.getWeatherData(lat, lon);
-      setWeatherData(res.data);
-    } catch (err) {
-      console.log("find error =>", err);
-    }
-    setLoading(false);
-  };
-  useEffect(() => {
-    localfetch();
-  }, []);
+  // const getWeatherData = async (lat, lon) => {
+  //   setLoading(true);
+  //   try {
+  //     let res = await api.getWeatherData(lat, lon);
+  //     setWeatherData(res.data);
+  //   } catch (err) {
+  //     console.log("find error =>", err);
+  //   }
+  //   setLoading(false);
+  // };
+  // useEffect(() => {
+  //   localfetch();
+  // }, []);
 
-  useEffect(() => {
-    getWeatherData(mainLocationLat, mainLocationLon);
-    toggleBtn();
-  }, [mainLocationLat, mainLocationLon]);
+  // useEffect(() => {
+  //   getWeatherData(mainLocationLat, mainLocationLon);
+  //   toggleBtn();
+  // }, [mainLocationLat, mainLocationLon]);
 
   // const localfetch = () => {
   //   localLocation.forEach((current) => {
@@ -89,43 +97,43 @@ const Home = (props) => {
 
   return (
     <div className={styles.homeWrap}>
-      {loading ? (
+      {/* {loading ? (
         <div>
           <h2 style={{ color: "white" }}>Loading</h2>
         </div>
-      ) : (
-        <div
-          className={styles.container}
-          style={menuClosed ? menuCloseStyle : menuOpenStyle}
-        >
-          <Menu
-            // localWeatherData={localWeatherData}
-            // getfetch={getfetch}
-            toggleBtn={toggleBtn}
-            tempRound={tempRound}
-            menuState={menuClosed}
-            loading={loading}
-            localWeatherData={localWeatherData}
-            mainLocationName={mainLocationName}
-            currentTemp={weatherData.current}
+      ) : ( */}
+      <div
+        className={styles.container}
+        style={menuClosed ? menuCloseStyle : menuOpenStyle}
+      >
+        <Menu
+          // localWeatherData={localWeatherData}
+          // getfetch={getfetch}
+          toggleBtn={toggleBtn}
+          tempRound={tempRound}
+          menuState={menuClosed}
+          loading={loading}
+          localWeatherData={localLocationData}
+          mainLocationName={mainLocaitonData.name}
+          currentTemp={mainLocaitonData.current}
 
-            // locationName={weatherData.timezone}
-            // temp={tempRound(weatherData.current.temp)}
-            // weatherIcon={weatherData.current.weather[0].icon}
-          ></Menu>
-          <Main
-            toggleBtn={toggleBtn}
-            menuState={menuClosed}
-            tempRound={tempRound}
-            mainLocationName={mainLocationName}
-            currentTemp={weatherData.current}
-            todayTemp={weatherData.daily}
-            hourlyTemp={weatherData.hourly}
-            totalWeather={weatherData}
-            loading={loading}
-          ></Main>
-        </div>
-      )}
+          // locationName={weatherData.timezone}
+          // temp={tempRound(weatherData.current.temp)}
+          // weatherIcon={weatherData.current.weather[0].icon}
+        ></Menu>
+        <Main
+          toggleBtn={toggleBtn}
+          menuState={menuClosed}
+          tempRound={tempRound}
+          mainLocationName={mainLocaitonData.name}
+          currentTemp={mainLocaitonData.current}
+          todayTemp={mainLocaitonData.daily}
+          hourlyTemp={mainLocaitonData.hourly}
+          totalWeather={mainLocaitonData}
+          loading={loading}
+        ></Main>
+      </div>
+      {/* )} */}
     </div>
   );
 };

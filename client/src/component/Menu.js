@@ -26,6 +26,7 @@ const Menu = (props) => {
   // useEffect(() => {
   //   localfetch();
   // }, [localLocation]);
+  console.log(props.localWeatherData);
 
   return (
     <div className={styles.menuWrap}>

@@ -1,19 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./css/Menu.module.scss";
+import { changeMainLocation } from "../module/weatherReducer";
 
 const Menu_Section = (props) => {
   const dispatch = useDispatch();
-  const changeMainLocation = (name, lat, lon) => ({
-    type: "changeMainLocation",
-    name: name,
-    lat: lat,
-    lon: lon,
-  });
 
   return (
     <div className={styles.menuSectionWrap}>
@@ -48,11 +43,9 @@ const Menu_Section = (props) => {
             <button
               key={idx}
               className={styles.localWrap}
-              onClick={() =>
-                dispatch(
-                  changeMainLocation(current.name, current.lat, current.lon)
-                )
-              }
+              onClick={() => {
+                dispatch(changeMainLocation(current));
+              }}
             >
               <h4>{current.name}</h4>
               <div className={styles.weatherWrap}>

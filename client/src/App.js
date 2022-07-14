@@ -9,8 +9,9 @@ import LocalManagement from "./routes/LocalManagement";
 import axios from "axios";
 import * as api from "./function/getOpenAPI";
 import weatherReducer, {
-  addTemp,
+  setMainLocationData,
   changeMainLocation,
+  setLocalLocationData,
 } from "./module/weatherReducer";
 
 function App() {
@@ -22,25 +23,67 @@ function App() {
 
   const [mainLocation, setMainLocation] = useState();
   const [mainData, setMainData] = useState();
+  const [localLocation, setLocalLocation] = useState([]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   const getMainLocation = async () => {
     try {
-      let res = await api.getDatabase();
-      console.log(res.data);
-      let dataRes = await api
-        .getWeatherData(res.data[0].lat, res.data[0].lon)
-        .then((response) => {
-          console.log(response.data);
-          dispatch(addTemp(response.data));
-        });
+      let localRes = await api.getlocalData();
+      let addLocalRes = Array.from(localRes.data);
+      let temp = addLocalRes.map(async (now) => {
+        try {
+          let res = await api.getWeatherData(now.lat, now.lon);
+          res.data.name = now.name;
+          dispatch(setLocalLocationData(res.data));
+          setLocalLocation((current) => current.concat(res.data));
+        } catch (err) {
+          console.log(`error 발생 => ${err}`);
+        }
+      });
+
+      let mainRes = await api.getDatabase();
+      let mainWeatherData = await api.getWeatherData(
+        mainRes.data[0].lat,
+        mainRes.data[0].lon
+      );
+      mainWeatherData.data.name = mainRes.data[0].name;
+      console.log(mainWeatherData.data);
+      dispatch(setMainLocationData(mainWeatherData.data));
     } catch (err) {
       console.log(`error = ${err}`);
     }
+    setLoading(false);
   };
 
+  // const getlocalLocation = async () => {
+  //   try {
+  // let localRes = await api.getlocalData();
+  // let addLocalRes = localRes.data;
+  // addLocalRes.forEach(async (current, idx) => {
+  //   try {
+  //     let res = await api.getWeatherData(current.lat, current.lon);
+  //     let addres = res.data;
+  //     addres.name = current.name;
+  //     console.log(addres);
+  //     console.log(`${idx}번째 addres입니다`);
+  //     dispatch(setLocalLocationData(addres));
+
+  //     // setLocalLocation((prev) => [...prev, addres]);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   setLoading(false);
+  // });
+  //   } catch (err) {
+  //     console.log(`err발생 = ${err}`);
+  //   }
+  // };
+
   useEffect(() => {
+    // getlocalLocation();
     getMainLocation();
+
     // getWeatherData(mainLocation.lat, mainLocation.lon);
     // dispatch(changeMainLocation);
   }, []);
@@ -88,23 +131,29 @@ function App() {
   // }
 
   return (
-    <BrowserRouter>
-      {/* <Provider store={store}> */}
-      <Routes>
-        <Route exact path={`/`} element={<Home />}></Route>
-        <Route
-          exact
-          path={`/localmanagement`}
-          element={<LocalManagement />}
-        ></Route>
-        <Route
-          exact
-          path={`/localmanagement/search`}
-          element={<Search />}
-        ></Route>
-      </Routes>
-      {/* </Provider> */}
-    </BrowserRouter>
+    <React.Fragment>
+      {loading ? (
+        <h2>set loading...</h2>
+      ) : (
+        <BrowserRouter>
+          {/* <Provider store={store}> */}
+          <Routes>
+            <Route exact path={`/`} element={<Home />}></Route>
+            <Route
+              exact
+              path={`/localmanagement`}
+              element={<LocalManagement />}
+            ></Route>
+            <Route
+              exact
+              path={`/localmanagement/search`}
+              element={<Search />}
+            ></Route>
+          </Routes>
+          {/* </Provider> */}
+        </BrowserRouter>
+      )}
+    </React.Fragment>
   );
 }
 

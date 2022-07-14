@@ -1,62 +1,77 @@
 const ChangeMainData = "changeMainLocation";
 const AddLocalData = "addLocalData";
-const AddTemp = "AddTemp";
+const SetMainLocationData = "SetMainLocationData";
+const SetLocalLocationData = "SetLocalLocationData";
 
-export const changeMainLocation = (name, lat, lon) => ({
+export const changeMainLocation = (data) => ({
   type: ChangeMainData,
-  name: name,
-  lat: lat,
-  lon: lon,
+  data: data,
 });
 
-export const addTemp = (data) => ({
-  type: AddTemp,
+export const setMainLocationData = (data) => ({
+  type: SetMainLocationData,
+  data: data,
+});
+
+export const setLocalLocationData = (data) => ({
+  type: SetLocalLocationData,
   data: data,
 });
 
 const initState = {
-  mainLocation: { name: "경기도 안산시", lat: 37.3236, lon: 126.8219 },
+  mainLocation: [],
   localLocation: [
-    {
-      name: "서울특별시",
-      lat: 37.5683,
-      lon: 126.9778,
-    },
-    {
-      name: "부산광역시",
-      lat: 35.1028,
-      lon: 129.0403,
-    },
+    // {
+    //   name: "서울특별시",
+    //   lat: 37.5683,
+    //   lon: 126.9778,
+    // },
+    // {
+    //   name: "부산광역시",
+    //   lat: 35.1028,
+    //   lon: 129.0403,
+    // },
   ],
-  temp: [],
+  mainLocationData: [],
+  localLocationData: [],
 };
 export default function weatherReducer(state = initState, action) {
   let tempState = { ...initState };
   switch (action.type) {
     case ChangeMainData: {
+      console.log(action.data);
       return {
-        tempState,
+        ...state,
+        mainLocationData: action.data,
+      };
+
+      //   // mainLocation: {
+      //   //   name: action.name,
+      //   //   lat: action.lat,
+      //   //   lon: action.lon,
+      //   // },
+      // };
+    }
+    case SetMainLocationData: {
+      let data = action.data;
+      return {
+        ...state,
+        mainLocationData: state.mainLocationData.concat(data),
         mainLocation: {
-          name: action.name,
-          lat: action.lat,
-          lon: action.lon,
+          name: action.data.name,
+          lat: action.data.lat,
+          lon: action.data.lon,
         },
       };
     }
-    case AddLocalData: {
+    case SetLocalLocationData: {
+      let data = action.data;
       return {
-        tempState,
-        localLocation: [
-          ...{ name: action.name, lat: action.lat, lon: action.lon },
-        ],
+        ...state,
+        localLocationData: state.localLocationData.concat(data),
       };
     }
-    case AddTemp: {
-      return {
-        tempState,
-        temp: [...{ data: action.data }],
-      };
-    }
+
     default:
       return state;
   }

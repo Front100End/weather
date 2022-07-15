@@ -26,7 +26,7 @@ const Search = (props) => {
     } else {
       try {
         await axios
-          .get("http://localhost:5000/naversearch", {
+          .get("https://weather-info-korea.herokuapp.com/naversearch", {
             params: {
               searchKeyword: searchKey,
             },
@@ -120,18 +120,23 @@ const Search = (props) => {
                   onClick={async () => {
                     // console.log(current);
                     try {
+                      let insertId;
                       let res = await api.postlocalData(
                         current.roadAddress,
                         current.y,
                         current.x
                       );
-                      let addLocaldata = await api.getWeatherData(
+                      insertId = res.data.insertId;
+                      console.log(insertId);
+                      let addWetherdataRes = await api.getWeatherData(
                         current.y,
                         current.x
                       );
-                      addLocaldata.data.name = current.roadAddress;
-                      console.log(addLocaldata.data);
-                      dispatch(setLocalLocationData(addLocaldata.data));
+                      addWetherdataRes.data.name = current.roadAddress;
+                      addWetherdataRes.data.id = insertId;
+                      console.log(addWetherdataRes.data);
+                      dispatch(setLocalLocationData(addWetherdataRes.data));
+                      navigate(-1);
                     } catch (err) {
                       console.log(`error 발생 => ${err}`);
                     }

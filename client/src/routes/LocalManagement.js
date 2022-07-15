@@ -14,6 +14,10 @@ const Local_Management = (props) => {
   );
   const mainWeatherData = useSelector((state) => state.mainLocationData[0]);
   const localWeatherData = useSelector((state) => state.localLocationData);
+  const [longClick, setLongClick] = useState(false);
+  const changeClickState = () => {
+    setLongClick((current) => !current);
+  };
 
   // const [loading, setLoading] = useState(true);
   // const [weatherData, setWeatherData] = useState([]);
@@ -65,13 +69,15 @@ const Local_Management = (props) => {
         <div>Is Loading...</div>
       ) : ( */}
       <React.Fragment>
-        <Nav></Nav>
+        <Nav longClick={longClick} changeClickState={changeClickState}></Nav>
         <Section
           weatherData={mainWeatherData}
           localWeatherData={localWeatherData}
           mainLocationName={mainWeatherData.name}
           weatherIconRender={weatherIconRender}
           tempRound={tempRound}
+          longClick={longClick}
+          changeClickState={changeClickState}
         ></Section>
       </React.Fragment>
       {/* )} */}

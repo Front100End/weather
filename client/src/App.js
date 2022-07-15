@@ -35,6 +35,7 @@ function App() {
         try {
           let res = await api.getWeatherData(now.lat, now.lon);
           res.data.name = now.name;
+          res.data.id = now.id;
           dispatch(setLocalLocationData(res.data));
           setLocalLocation((current) => current.concat(res.data));
         } catch (err) {
@@ -48,7 +49,7 @@ function App() {
         mainRes.data[0].lon
       );
       mainWeatherData.data.name = mainRes.data[0].name;
-      console.log(mainWeatherData.data);
+      mainWeatherData.data.id = mainRes.data[0].id;
       dispatch(setMainLocationData(mainWeatherData.data));
     } catch (err) {
       console.log(`error = ${err}`);

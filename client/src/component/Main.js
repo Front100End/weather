@@ -126,14 +126,14 @@ const Main = (props) => {
   const putlocalData = async () => {
     try {
       let res = await api.putlocalData("경기도 수원시", 37.2342, 128.123, 5);
-      console.log(res.data);
+      console.log(res);
     } catch (err) {
       console.log("find error =>", err);
     }
   };
   const deletelocalData = async () => {
     try {
-      let res = await api.deletelocalData(54);
+      let res = await api.deletelocalData(15);
       console.log(res.data);
     } catch (err) {
       console.log("find error =>", err);
@@ -170,7 +170,7 @@ const Main = (props) => {
       <button onClick={(e) => getlocalData()}>localget버튼</button>
       <button onClick={(e) => postlocalData()}>localpost버튼</button>
       <button onClick={(e) => putlocalData()}>localput버튼</button>
-      <button onClick={(e) => deleteDatabase()}>localdelete버튼</button>
+      <button onClick={(e) => deletelocalData()}>localdelete버튼</button>
     </div>
   );
 };

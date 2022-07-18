@@ -9,8 +9,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import * as api from "../function/getOpenAPI";
 
-import { changeMainLocation } from "../module/weatherReducer";
+import {
+  changeMainLocation,
+  deleteLocalcationData,
+} from "../module/weatherReducer";
 
 import LongPressable from "react-longpressable";
 
@@ -61,9 +65,11 @@ const LocalManagement_Section = (props) => {
       setDeleteArray((deleteList) => [...deleteList, current.id]);
     }
   };
-  const deleteData = (List) => {
+  const deleteData = async (List) => {
     console.log("delete시작");
     console.log(List);
+    List.forEach((current) => api.deletelocalData(current));
+    List.forEach((current) => dispatch(deleteLocalcationData(current)));
   };
   // const onToggleLongClick = (e) => setLongClick((current) => !current);
 

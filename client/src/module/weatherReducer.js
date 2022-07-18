@@ -2,6 +2,7 @@ const ChangeMainData = "changeMainLocation";
 const AddLocalData = "addLocalData";
 const SetMainLocationData = "SetMainLocationData";
 const SetLocalLocationData = "SetLocalLocationData";
+const DeleteLocalLocationData = "DeleteLocalLocationData";
 
 export const changeMainLocation = (data) => ({
   type: ChangeMainData,
@@ -17,26 +18,18 @@ export const setLocalLocationData = (data) => ({
   type: SetLocalLocationData,
   data: data,
 });
+export const deleteLocalcationData = (data) => ({
+  type: DeleteLocalLocationData,
+  data: data,
+});
 
 const initState = {
   mainLocation: [],
-  localLocation: [
-    // {
-    //   name: "서울특별시",
-    //   lat: 37.5683,
-    //   lon: 126.9778,
-    // },
-    // {
-    //   name: "부산광역시",
-    //   lat: 35.1028,
-    //   lon: 129.0403,
-    // },
-  ],
+  localLocation: [],
   mainLocationData: [],
   localLocationData: [],
 };
 export default function weatherReducer(state = initState, action) {
-  let tempState = { ...initState };
   switch (action.type) {
     case ChangeMainData: {
       console.log(action.data);
@@ -44,24 +37,12 @@ export default function weatherReducer(state = initState, action) {
         ...state,
         mainLocationData: action.data,
       };
-
-      //   // mainLocation: {
-      //   //   name: action.name,
-      //   //   lat: action.lat,
-      //   //   lon: action.lon,
-      //   // },
-      // };
     }
     case SetMainLocationData: {
       let data = action.data;
       return {
         ...state,
         mainLocationData: state.mainLocationData.concat(data),
-        mainLocation: {
-          name: action.data.name,
-          lat: action.data.lat,
-          lon: action.data.lon,
-        },
       };
     }
     case SetLocalLocationData: {
@@ -69,6 +50,14 @@ export default function weatherReducer(state = initState, action) {
       return {
         ...state,
         localLocationData: state.localLocationData.concat(data),
+      };
+    }
+    case DeleteLocalLocationData: {
+      return {
+        ...state,
+        localLocationData: state.localLocationData.filter(
+          (current) => current.id !== action.data
+        ),
       };
     }
 

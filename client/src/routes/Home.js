@@ -17,12 +17,15 @@ const Home = (props) => {
   const mainLocaitonData = useSelector((state) => state.mainLocationData[0]);
   const localLocationData = useSelector((state) => state.localLocationData);
 
-  useEffect(() => {
-    setReRender((current) => +1);
-  }, [mainLocaitonData, localLocationData]);
-
   const [loading, setLoading] = useState(true);
   const [menuClosed, setMenuClosed] = useState(true);
+
+  useEffect(() => {
+    setReRender((current) => +1);
+    console.log(loading);
+    setLoading(false);
+  }, [mainLocaitonData, localLocationData]);
+
   // const [weatherData, setWeatherData] = useState([]);
   // const [localWeatherData, setLocalWeatherData] = useState([]);
 
@@ -97,43 +100,43 @@ const Home = (props) => {
 
   return (
     <div className={styles.homeWrap}>
-      {/* {loading ? (
+      {loading ? (
         <div>
           <h2 style={{ color: "white" }}>Loading</h2>
         </div>
-      ) : ( */}
-      <div
-        className={styles.container}
-        style={menuClosed ? menuCloseStyle : menuOpenStyle}
-      >
-        <Menu
-          // localWeatherData={localWeatherData}
-          // getfetch={getfetch}
-          toggleBtn={toggleBtn}
-          tempRound={tempRound}
-          menuState={menuClosed}
-          loading={loading}
-          localWeatherData={localLocationData}
-          mainLocationName={mainLocaitonData.name}
-          currentTemp={mainLocaitonData.current}
+      ) : (
+        <div
+          className={styles.container}
+          style={menuClosed ? menuCloseStyle : menuOpenStyle}
+        >
+          <Menu
+            // localWeatherData={localWeatherData}
+            // getfetch={getfetch}
+            toggleBtn={toggleBtn}
+            tempRound={tempRound}
+            menuState={menuClosed}
+            loading={loading}
+            localWeatherData={localLocationData}
+            mainLocationName={mainLocaitonData.name}
+            currentTemp={mainLocaitonData.current}
 
-          // locationName={weatherData.timezone}
-          // temp={tempRound(weatherData.current.temp)}
-          // weatherIcon={weatherData.current.weather[0].icon}
-        ></Menu>
-        <Main
-          toggleBtn={toggleBtn}
-          menuState={menuClosed}
-          tempRound={tempRound}
-          mainLocationName={mainLocaitonData.name}
-          currentTemp={mainLocaitonData.current}
-          todayTemp={mainLocaitonData.daily}
-          hourlyTemp={mainLocaitonData.hourly}
-          totalWeather={mainLocaitonData}
-          loading={loading}
-        ></Main>
-      </div>
-      {/* )} */}
+            // locationName={weatherData.timezone}
+            // temp={tempRound(weatherData.current.temp)}
+            // weatherIcon={weatherData.current.weather[0].icon}
+          ></Menu>
+          <Main
+            toggleBtn={toggleBtn}
+            menuState={menuClosed}
+            tempRound={tempRound}
+            mainLocationName={mainLocaitonData.name}
+            currentTemp={mainLocaitonData.current}
+            todayTemp={mainLocaitonData.daily}
+            hourlyTemp={mainLocaitonData.hourly}
+            totalWeather={mainLocaitonData}
+            loading={loading}
+          ></Main>
+        </div>
+      )}
     </div>
   );
 };

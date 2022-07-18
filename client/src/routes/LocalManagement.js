@@ -52,7 +52,7 @@ const Local_Management = (props) => {
     return temp;
   };
   const weatherIconRender = (currentIcon) => {
-    let icon = `https://openweathermap.org/img/wn/${currentIcon}.png`;
+    let icon = `https://openweathermap.org/img/wn/${currentIcon}@2x.png`;
     return icon;
   };
 

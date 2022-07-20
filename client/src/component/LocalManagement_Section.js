@@ -33,6 +33,8 @@ const LocalManagement_Section = (props) => {
   const month = new Date().getMonth() + 1;
   const date = new Date().getDate();
 
+  // 날짜,시간 패치
+
   const dayFetch = () => {
     let time = new Date();
     let week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -53,6 +55,8 @@ const LocalManagement_Section = (props) => {
     }
   };
 
+  // localList longTouch event
+
   const onLongPress = (e) => {
     console.log("Long pressed.");
     props.changeClickState();
@@ -65,12 +69,28 @@ const LocalManagement_Section = (props) => {
       setDeleteArray((deleteList) => [...deleteList, current.id]);
     }
   };
+
+  // 하단 즐겨찾기 설정, local List 삭제 기능
+
   const deleteData = async (List) => {
-    console.log("delete시작");
-    console.log(List);
-    List.forEach((current) => api.deletelocalData(current));
+    List.forEach((current) => api.deleteLocalData(current));
     List.forEach((current) => dispatch(deleteLocalcationData(current)));
   };
+  const changeMainData = (data) => {
+    let temp;
+    if (data.length === 1) {
+      props.localWeatherData.forEach((current) => {
+        if (current.id == data) {
+          temp = current;
+          api.putMainData(current.name, current.lat, current.lon, 1);
+        }
+      });
+      dispatch(changeMainLocation(temp));
+    } else {
+      alert("한개만 선택 해주세요.");
+    }
+  };
+
   // const onToggleLongClick = (e) => setLongClick((current) => !current);
 
   useEffect(() => {
@@ -205,13 +225,22 @@ const LocalManagement_Section = (props) => {
       </footer>
       {props.longClick ? (
         <footer className={styles.deleteArea}>
-          <div>
+          <div
+            onClick={(e) => {
+              changeMainData(deleteArray);
+            }}
+          >
             <em>
               <FontAwesomeIcon icon={faCheck} />
             </em>
             <span>즐겨찾기 설정</span>
           </div>
-          <div onClick={(e) => deleteData(deleteArray)}>
+          <div
+            onClick={(e) => {
+              deleteData(deleteArray);
+              props.changeClickState();
+            }}
+          >
             <em>
               <FontAwesomeIcon icon={faTrashCan} />
             </em>

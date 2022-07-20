@@ -5,6 +5,7 @@ import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./css/Menu.module.scss";
+import * as api from "../function/getOpenAPI";
 import { changeMainLocation } from "../module/weatherReducer";
 
 const Menu_Section = (props) => {
@@ -24,8 +25,10 @@ const Menu_Section = (props) => {
           />
         </div>
         <div>
-          <h4 className={styles.oftenLocalArea}>{props.mainLocationName}</h4>
-          <span>{props.tempRound(props.currentTemp.temp)}°</span>
+          <h4 className={styles.oftenLocalArea}>
+            {props.mainWeatherData.name}
+          </h4>
+          <span>{props.tempRound(props.mainWeatherData.current.temp)}°</span>
         </div>
       </section>
 
@@ -44,6 +47,7 @@ const Menu_Section = (props) => {
               key={idx}
               className={styles.localWrap}
               onClick={() => {
+                api.putMainData(current.name, current.lat, current.lon, 1);
                 dispatch(changeMainLocation(current));
               }}
             >

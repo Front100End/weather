@@ -30,7 +30,7 @@ const Main_HourlyTemp = (props) => {
   };
   ResizedComponent();
 
-  let hourly = props.hourlyTemp.slice(1, 19);
+  let hourly = props.mainWeatherData.hourly.slice(1, 19);
 
   const unixTimeTransform = (dt) => {
     let UnixTime = new Date(dt * 1000);

@@ -29,7 +29,7 @@ function App() {
 
   const getMainLocation = async () => {
     try {
-      let localRes = await api.getlocalData();
+      let localRes = await api.getLocalData();
       let addLocalRes = Array.from(localRes.data);
       let temp = addLocalRes.map(async (now) => {
         try {
@@ -43,7 +43,7 @@ function App() {
         }
       });
 
-      let mainRes = await api.getDatabase();
+      let mainRes = await api.getMainData();
       let mainWeatherData = await api.getWeatherData(
         mainRes.data[0].lat,
         mainRes.data[0].lon
@@ -137,7 +137,6 @@ function App() {
         <h2>set loading...</h2>
       ) : (
         <BrowserRouter>
-          {/* <Provider store={store}> */}
           <Routes>
             <Route exact path={`/`} element={<Home />}></Route>
             <Route
@@ -151,7 +150,6 @@ function App() {
               element={<Search />}
             ></Route>
           </Routes>
-          {/* </Provider> */}
         </BrowserRouter>
       )}
     </React.Fragment>

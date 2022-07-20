@@ -7,45 +7,12 @@ import { useSelector } from "react-redux";
 import * as api from "../function/getOpenAPI";
 
 const Local_Management = (props) => {
-  const mainLocationLat = useSelector((state) => state.mainLocationData[0].lat);
-  const mainLocationLon = useSelector((state) => state.mainLocationData[0].lon);
-  const mainLocationName = useSelector(
-    (state) => state.mainLocationData[0].name
-  );
   const mainWeatherData = useSelector((state) => state.mainLocationData[0]);
   const localWeatherData = useSelector((state) => state.localLocationData);
   const [longClick, setLongClick] = useState(false);
   const changeClickState = () => {
     setLongClick((current) => !current);
   };
-
-  // const [loading, setLoading] = useState(true);
-  // const [weatherData, setWeatherData] = useState([]);
-  // const [localWeatherData, setLocalWeatherData] = useState([]);
-
-  // const localfetch = () => {
-  //   localLocation.forEach(async (current) => {
-  //     try {
-  //       let res = await api.getWeatherData(current.lat, current.lon);
-  //       let addres = res.data;
-  //       addres.name = current.name;
-  //       setLocalWeatherData((prev) => [...prev, addres]);
-  //     } catch (error) {
-  //       console.log("error => " + error);
-  //     }
-  //   });
-  // };
-
-  // const getWeatherData = async (lat, lon) => {
-  //   setLoading(true);
-  //   try {
-  //     let res = await api.getWeatherData(lat, lon);
-  //     setWeatherData(res.data);
-  //   } catch (err) {
-  //     console.log("find error =>", err);
-  //   }
-  //   setLoading(false);
-  // };
 
   const tempRound = (props) => {
     let temp = Math.round(props - 273.15);
@@ -56,13 +23,6 @@ const Local_Management = (props) => {
     return icon;
   };
 
-  // useEffect(() => {
-  //   localfetch();
-  // }, []);
-
-  // useEffect(() => {
-  //   getWeatherData(mainLocationLat, mainLocationLon);
-  // }, [mainLocationLat, mainLocationLon]);
   return (
     <div className={styles.localManagementWrap}>
       {/* {loading ? (

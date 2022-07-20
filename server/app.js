@@ -43,12 +43,11 @@ app.get("/", function (req, res) {
 
 // ------------database mysql -------------
 
-app.get("/database", async (req, res) => {
+app.get("/maindata", async (req, res) => {
   const [rows, fields] = await connection.execute("SELECT * FROM mainlocation");
-  console.log("rows :", rows);
   res.send(rows);
 });
-app.post("/database", async (req, res) => {
+app.post("/maindata", async (req, res) => {
   const { name, lat, lon } = req.body;
   const [rows, fields] = await connection.execute(
     `INSERT INTO mainlocation(name,lat,lon) VALUES(?,?,?)`,
@@ -57,7 +56,7 @@ app.post("/database", async (req, res) => {
   res.send("post값이 정상적으로 추가 되었습니다.");
 });
 
-app.put("/database", async (req, res) => {
+app.put("/maindata", async (req, res) => {
   const { name, lat, lon, id } = req.body;
   const [rows, fields] = await connection.execute(
     `UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?`,
@@ -66,7 +65,7 @@ app.put("/database", async (req, res) => {
   res.send("put값이 정상적으로 업데이트 되었습니다.");
 });
 
-app.delete("/database/:id", async (req, res) => {
+app.delete("/maindata/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const [rows, fields] = await connection.execute(
@@ -83,12 +82,10 @@ app.get("/localdata", async (req, res) => {
   const [rows, fields] = await connection.execute(
     "SELECT * FROM locallocation"
   );
-  console.log("rows :", rows);
   res.send(rows);
 });
 app.post("/localdata", async (req, res) => {
   const { name, lat, lon } = req.body;
-  console.log(name);
   const [rows, fields] = await connection.execute(
     `INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)`,
     [name, lat, lon]

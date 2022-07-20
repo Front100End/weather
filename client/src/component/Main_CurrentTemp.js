@@ -7,6 +7,7 @@ const Main_CurrentTemp = (props) => {
     hours: new Date().getHours(),
     minutes: new Date().getMinutes(),
   });
+
   const [timeAMPM, setTimeAMPM] = useState("오전");
   useEffect(() => {
     dayFetch();
@@ -42,19 +43,20 @@ const Main_CurrentTemp = (props) => {
         <div className={styles.container}>
           <div className={styles.info}>
             <h2 className={styles.maintemp}>
-              {props.tempRound(props.currentTemp.temp)}°
+              {props.tempRound(props.mainWeatherData.current.temp)}°
             </h2>
-            <p className={styles.locationName}>{props.mainLocationName}</p>
+            <p className={styles.locationName}>{props.mainWeatherData.name}</p>
 
             <div className={styles.tempWrap}>
               <span className={styles.tempMin}>
-                {props.tempRound(props.todayTemp[0].temp.min)}° /
+                {props.tempRound(props.mainWeatherData.daily[0].temp.min)}° /
               </span>
               <span className={styles.tempMax}>
-                {props.tempRound(props.todayTemp[0].temp.max)}°
+                {props.tempRound(props.mainWeatherData.daily[0].temp.max)}°
               </span>
               <span className={styles.sensibleTemp}>
-                체감온도 {props.tempRound(props.currentTemp.feels_like)}°
+                체감온도{" "}
+                {props.tempRound(props.mainWeatherData.current.feels_like)}°
               </span>
             </div>
 
@@ -67,12 +69,13 @@ const Main_CurrentTemp = (props) => {
             </div>
           </div>
           <img
-            src={weatherIconRender(props.currentTemp.weather[0].icon)}
+            src={weatherIconRender(
+              props.mainWeatherData.current.weather[0].icon
+            )}
             alt="weatherIcon error"
           />
         </div>
       </article>
-      {/* )} */}
     </React.Fragment>
   );
 };

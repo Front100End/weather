@@ -86,6 +86,7 @@ const LocalManagement_Section = (props) => {
         }
       });
       dispatch(changeMainLocation(temp));
+      props.changeClickState();
     } else {
       alert("한개만 선택 해주세요.");
     }
@@ -97,8 +98,6 @@ const LocalManagement_Section = (props) => {
     dayFetch();
     timeFetch();
   }, []);
-  //   const date = new Date();
-  //   const currentTime = `${date.getMonth()}월${date.getDay()}일 ${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
   return (
     <div className={styles.localManagementSectionWrap}>
       <h3 className={styles.Title}>

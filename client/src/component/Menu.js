@@ -12,6 +12,8 @@ const Menu = (props) => {
     <div className={styles.menuWrap}>
       <Nav></Nav>
       <Section
+        toggleBtn={props.toggleBtn}
+        menuState={props.menuClosed}
         mainWeatherData={props.mainWeatherData}
         localWeatherData={props.localWeatherData}
         tempRound={props.tempRound}

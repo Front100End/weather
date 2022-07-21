@@ -3,32 +3,32 @@ import { debounce } from "lodash";
 import styles from "./css/Main.module.scss";
 
 const Main_HourlyTemp = (props) => {
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-  const ResizedComponent = () => {
-    const resizeHandler = debounce(() => {
-      if (window.innerWidth >= 700) {
-        setWindowSize({
-          width: "700px",
-          height: window.innerHeight,
-        });
-      } else {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-    }, 100);
-    useEffect(() => {
-      window.addEventListener("resize", resizeHandler);
-      return () => {
-        window.removeEventListener("resize", resizeHandler);
-      };
-    }, []);
-  };
-  ResizedComponent();
+  // const [windowSize, setWindowSize] = useState({
+  //   width: window.innerWidth,
+  //   height: window.innerHeight,
+  // });
+  // const ResizedComponent = () => {
+  //   const resizeHandler = debounce(() => {
+  //     if (window.innerWidth >= 700) {
+  //       setWindowSize({
+  //         width: "700px",
+  //         height: window.innerHeight,
+  //       });
+  //     } else {
+  //       setWindowSize({
+  //         width: window.innerWidth,
+  //         height: window.innerHeight,
+  //       });
+  //     }
+  //   }, 100);
+  //   useEffect(() => {
+  //     window.addEventListener("resize", resizeHandler);
+  //     return () => {
+  //       window.removeEventListener("resize", resizeHandler);
+  //     };
+  //   }, []);
+  // };
+  // ResizedComponent();
 
   let hourly = props.mainWeatherData.hourly.slice(1, 19);
 
@@ -57,11 +57,8 @@ const Main_HourlyTemp = (props) => {
     unixTimeTransform();
   }, []);
   return (
-    <React.Fragment>
-      <ul
-        className={styles.mainHourlyWrap}
-        style={{ width: `${windowSize.width * 0.9}px` }}
-      >
+    <div>
+      <ul className={styles.mainHourlyWrap}>
         {hourly.map((current, idx) => {
           return (
             <li key={idx}>
@@ -76,7 +73,7 @@ const Main_HourlyTemp = (props) => {
           );
         })}
       </ul>
-    </React.Fragment>
+    </div>
   );
 };
 

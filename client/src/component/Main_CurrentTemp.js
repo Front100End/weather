@@ -39,7 +39,7 @@ const Main_CurrentTemp = (props) => {
   };
   return (
     <React.Fragment>
-      <article className={styles.mainCurrentWrap}>
+      <div className={styles.mainCurrentWrap}>
         <div className={styles.container}>
           <div className={styles.info}>
             <h2 className={styles.maintemp}>
@@ -75,7 +75,7 @@ const Main_CurrentTemp = (props) => {
             alt="weatherIcon error"
           />
         </div>
-      </article>
+      </div>
     </React.Fragment>
   );
 };

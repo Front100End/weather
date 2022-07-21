@@ -49,6 +49,7 @@ const Menu_Section = (props) => {
               onClick={() => {
                 api.putMainData(current.name, current.lat, current.lon, 1);
                 dispatch(changeMainLocation(current));
+                props.toggleBtn();
               }}
             >
               <h4>{current.name}</h4>

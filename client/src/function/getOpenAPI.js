@@ -44,22 +44,22 @@ import axios from "axios";
 
 // -----------------------local--------------------
 
-export const getDatabase = () =>
+export const getMainData = () =>
   axios.get("https://weather-info-korea.herokuapp.com/database");
-export const postDatabase = (name, lat, lon) =>
+export const postMainData = (name, lat, lon) =>
   axios.post("https://weather-info-korea.herokuapp.com/database", {
     name: name,
     lat: lat,
     lon: lon,
   });
-export const putDatabase = (name, lat, lon, id) =>
+export const putMainData = (name, lat, lon, id) =>
   axios.put("https://weather-info-korea.herokuapp.com/database", {
     name: name,
     lat: lat,
     lon: lon,
     id: id,
   });
-export const deleteDatabase = (id) =>
+export const deleteMainData = (id) =>
   axios.delete(`https://weather-info-korea.herokuapp.com/database/${id}`);
 
 export const getWeatherData = (lat, lon) =>
@@ -70,22 +70,22 @@ export const getWeatherData = (lat, lon) =>
     },
   });
 
-export const getlocalData = () =>
+export const getLocalData = () =>
   axios.get("https://weather-info-korea.herokuapp.com/localdata");
-export const postlocalData = (name, lat, lon) =>
+export const postLocalData = (name, lat, lon) =>
   axios.post("https://weather-info-korea.herokuapp.com/localdata", {
     name: name,
     lat: lat,
     lon: lon,
   });
-export const putlocalData = (name, lat, lon, id) =>
+export const putLocalData = (name, lat, lon, id) =>
   axios.put("https://weather-info-korea.herokuapp.com/localdata", {
     name: name,
     lat: lat,
     lon: lon,
     id: id,
   });
-export const deletelocalData = (id) =>
+export const deleteLocalData = (id) =>
   axios.delete(`https://weather-info-korea.herokuapp.com/localdata/${id}`);
 
 // -----------------------------heroku

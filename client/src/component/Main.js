@@ -8,25 +8,22 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./css/Main.module.scss";
+import { speechBubble } from "../function/catSpeechSet";
 
 const Main = (props) => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [speech, setSpeech] = useState("주인님! 오늘은 비가 올 예정이에요.");
+  const [advice, setAdvice] = useState("");
+
   const ResizedComponent = () => {
     const resizeHandler = debounce(() => {
-      if (window.innerWidth >= 700) {
-        setWindowSize({
-          width: 700,
-          height: window.innerHeight,
-        });
-      } else {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     }, 100);
     useEffect(() => {
       window.addEventListener("resize", resizeHandler);
@@ -36,6 +33,27 @@ const Main = (props) => {
     }, []);
   };
   ResizedComponent();
+
+  const speechSetFunction = (description) => {
+    setSpeech(description);
+  };
+
+  const adviceSetFunction = (description) => {
+    setAdvice(description);
+  };
+
+  const windowSizeAlert = () => {
+    if (windowSize.width > 1000) {
+      alert(
+        "이 서비스는 현재 모바일만을 지원하고 있어요.\n ctrl+Shift+C 및 새로고침을 이용해 모바일 기기로 전환해주세요.\n 더욱 발전하는 Weather 서비스가 되겠습니다."
+      );
+    }
+  };
+
+  useEffect(() => {
+    speechBubble(props.mainWeatherData, speechSetFunction, adviceSetFunction);
+    windowSizeAlert();
+  }, [props.mainWeatherData]);
 
   console.log(windowSize);
   return (
@@ -55,45 +73,43 @@ const Main = (props) => {
         ></aside>
       )}
       <Nav toggleBtn={props.toggleBtn} menuState={props.menuState}></Nav>
-
-      <Swiper
-        modules={[Pagination]}
-        className="banner"
-        spaceBetween={50}
-        slidesPerView={1}
-        pagination={{ clickable: true }}
-        style={{ marginTop: "25%" }}
-      >
-        <SwiperSlide>
-          <CurrentTemp
-            tempRound={props.tempRound}
-            loading={props.loading}
-            mainWeatherData={props.mainWeatherData}
-          ></CurrentTemp>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div>
+      <div className={styles.sliderWrapper}>
+        <Swiper
+          modules={[Pagination]}
+          className="banner"
+          spaceBetween={50}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          style={{ marginTop: "25%" }}
+        >
+          <SwiperSlide>
+            <CurrentTemp
+              tempRound={props.tempRound}
+              loading={props.loading}
+              mainWeatherData={props.mainWeatherData}
+            ></CurrentTemp>
+          </SwiperSlide>
+          <SwiperSlide>
             <HourTemp
               tempRound={props.tempRound}
               hourlyTemp={props.hourlyTemp}
               mainWeatherData={props.mainWeatherData}
             ></HourTemp>
-          </div>
-        </SwiperSlide>
-      </Swiper>
-      <div className={styles.speechBubble}></div>
-      {/* <section>
-        <CurrentTemp
-          tempRound={props.tempRound}
-          loading={props.loading}
-          mainWeatherData={props.mainWeatherData}
-        ></CurrentTemp>
-        <HourTemp
-          tempRound={props.tempRound}
-          hourlyTemp={props.hourlyTemp}
-          mainWeatherData={props.mainWeatherData}
-        ></HourTemp>
-      </section> */}
+          </SwiperSlide>
+        </Swiper>
+      </div>
+      <div className={styles.speechBubble}>
+        <li>
+          <p>주인님!</p>
+        </li>
+
+        <li>
+          <span>{speech}</span>
+        </li>
+        <li>
+          <span>{advice}</span>
+        </li>
+      </div>
     </div>
   );
 };

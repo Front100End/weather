@@ -4,7 +4,6 @@
 
 .mainWrap {
   position: relative;
-  width: 100%;
   max-width: 700px;
   max-height: 1500px;
   border: 2px solid black;
@@ -18,23 +17,13 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 99999;
   }
-
-  //swiper
-  // > section {
-  //   width: 200%;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   > div {
-  //     width: 100%;
-  //   }
-  // }
 }
 
 .mainNavWrap {
   > span {
-    font-size: 1.7em;
+    font-size: 1.7rem;
     position: absolute;
     left: 20px;
     top: 20px;
@@ -95,7 +84,7 @@
   background: rgb(255, 255, 255);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
-    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+    0 16px 32px rgba(0, 0, 0, 0.07);
   li {
     display: inline-block;
     vertical-align: middle;
@@ -121,20 +110,36 @@
 // #baddf9
 // #eeffff 90;
 .speechBubble {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  bottom: 25%;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
   background: #fff;
-  border: 1px solid black;
-  border-radius: 0.4em;
-  width: 80%;
-  height: 200px;
+  border-radius: 50%;
+  width: 70%;
+  height: 20%;
+  text-align: center;
+  animation-name: speechAnimation;
+  animation-duration: 1s;
+  p {
+    font-size: 1.25rem;
+    padding: 5px;
+  }
+  > li {
+    list-style: none;
+    padding-bottom: 0.4rem;
+  }
 }
 
 .speechBubble:after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 50%;
+  bottom: 5px;
+  left: 60%;
   width: 0;
   height: 0;
   border: 39px solid transparent;
@@ -143,4 +148,37 @@
   border-right: 0;
   margin-left: -19.5px;
   margin-bottom: -39px;
+}
+.sliderWrapper {
+  :global(.swiper-wrapper) {
+    align-items: center;
+  }
+  :global(.swiper-slide) {
+    padding: 0 0 2rem 0;
+  }
+  :global(.swiper-pagination-bullet) {
+    background: white;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+    opacity: 1;
+    margin-top: 10px;
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    background-color: #fff;
+    border: 1px solid black;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+@keyframes speechAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

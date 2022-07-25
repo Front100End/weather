@@ -46,12 +46,12 @@ export const speechBubble = (mainWeatherData, speech, advice) => {
       break;
     }
     case Clouds: {
-      speech(`오늘은 날이 흐리네요`);
+      speech(`오늘은 날이 흐려질 예정이에요`);
       advice(`그래도 기분좋게 아자!`);
       break;
     }
     case Clear: {
-      speech(`화창한 날씨! 기분 좋은 날씨에요:)`);
+      speech(`맑은 날씨, 기분 좋은 날씨에요:)`);
       advice(`오늘도 화이팅`);
       break;
     }

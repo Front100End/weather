@@ -1,12 +1,13 @@
 ::-webkit-scrollbar {
   display: none;
 }
-
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&family=Quicksand:wght@300&display=swap");
 .mainWrap {
   position: relative;
   max-width: 700px;
   max-height: 1500px;
-  border: 2px solid black;
+  padding: 0 3%;
   // background: linear-gradient(to top, #baddf9 0%, #eeffff 90%);
   background-image: url(../image/cat_winter_ver.png);
   background-size: cover;
@@ -48,23 +49,25 @@
     }
     img {
       margin-bottom: 15%;
-      background: rgba(0, 0, 0, 0.07);
       border-radius: 30%;
     }
   }
   .maintemp {
-    font-size: 60px;
-    font-weight: 500;
+    font-size: 4rem;
+    font-weight: 300;
+    font-family: "Quicksand", sans-serif;
   }
   .locationName {
-    font-size: 23px;
-    font-weight: 400;
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-family: "Noto Sans KR", sans-serif;
   }
   .tempWrap {
     padding: 15px 0 0 0;
     span {
       padding: 0 2.5px 0 0;
       font-size: 18px;
+      font-family: "Noto Sans KR", sans-serif;
     }
   }
   .dateWrap {
@@ -93,6 +96,7 @@
     span {
       font-size: 12px;
       white-space: nowrap;
+      font-family: "Noto Sans KR", sans-serif;
     }
     img {
     }
@@ -115,7 +119,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 30%;
+  bottom: 28%;
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
@@ -125,6 +129,8 @@
   text-align: center;
   animation-name: speechAnimation;
   animation-duration: 1s;
+  font-family: "Noto Sans KR", sans-serif;
+
   p {
     font-size: 1.25rem;
     padding: 5px;
@@ -175,10 +181,31 @@
 }
 
 @keyframes speechAnimation {
-  from {
+  0% {
+    transform: translateX(-50%);
     opacity: 0;
   }
-  to {
+
+  60%,
+  80% {
+    transform: translateX(-50%) rotate(-1deg);
+  }
+  75% {
     opacity: 1;
   }
+
+  70%,
+  90% {
+    transform: translateX(-50%) rotate(1deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+
+  // 30% {
+  //   transform: rotate(-10deg);
+  // }
+  // 40% {
+  //   transform: rotate(0deg);
+  // }
 }

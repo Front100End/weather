@@ -35,7 +35,11 @@ const Main_HourlyTemp = (props) => {
   const unixTimeTransform = (dt) => {
     let UnixTime = new Date(dt * 1000);
     let AMPM = "";
-    let hour = UnixTime.getHours();
+    let utc = new Date(
+      UnixTime.getTime() + UnixTime.getTimezoneOffset() * 60000
+    );
+    let hour = utc.getHours();
+
     if (hour < 10) {
       hour = `0${hour}`;
     }
@@ -53,9 +57,6 @@ const Main_HourlyTemp = (props) => {
     return icon;
   };
 
-  useEffect(() => {
-    unixTimeTransform();
-  }, []);
   return (
     <div>
       <ul className={styles.mainHourlyWrap}>

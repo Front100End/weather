@@ -11,20 +11,20 @@ const axios = require("axios");
 
 require("dotenv").config();
 
-// const cors = require("cors");
+const cors = require("cors");
 
-// const whitelist = ["http://localhost:3000"];
+const whitelist = ["http://localhost:3000"];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not Allowed Origin!"));
-//     }
-//   },
-// };
-// app.use(cors(corsOptions));
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not Allowed Origin!"));
+    }
+  },
+};
+app.use(cors(corsOptions));
 
 const { response } = require("express");
 let connection;
@@ -124,45 +124,27 @@ app.delete("/localdata/:id", async (req, res) => {
 
 // --------------open API--------------
 
-app.get("/weatherinfo", (req, res) => {
-  const x = req.query.x;
-  const y = req.query.y;
-  axios
-    .get(
-      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
-    )
-    .then((response) => {
-      res.send(response.data);
-    });
-});
-
 // app.get("/weatherinfo", (req, res) => {
 //   const x = req.query.x;
 //   const y = req.query.y;
 //   axios
 //     .get(
-//       `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weatherApiKey}`
+//       `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
 //     )
 //     .then((response) => {
 //       res.send(response.data);
 //     });
 // });
 
-app.get("/naversearch", (req, res) => {
-  const value = req.query.searchKeyword;
+app.get("/weatherinfo", (req, res) => {
+  const x = req.query.x;
+  const y = req.query.y;
   axios
-    .get(`https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode`, {
-      params: {
-        query: value,
-        display: 5,
-      },
-      headers: {
-        "X-NCP-APIGW-API-KEY-ID": `${process.env.REACT_APP_X_NCP_APIGW_API_KEY_ID}`,
-        "X-NCP-APIGW-API-KEY": `${process.env.REACT_APP_X_NCP_APIGW_API_KEY}`,
-      },
-    })
+    .get(
+      `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weatherApiKey}`
+    )
     .then((response) => {
-      res.send(response.data.addresses);
+      res.send(response.data);
     });
 });
 
@@ -175,8 +157,8 @@ app.get("/naversearch", (req, res) => {
 //         display: 5,
 //       },
 //       headers: {
-//         "X-NCP-APIGW-API-KEY-ID": `${naverSearch_API_KEY_ID}`,
-//         "X-NCP-APIGW-API-KEY": `${naverSearch_API_KEY}`,
+//         "X-NCP-APIGW-API-KEY-ID": `${process.env.REACT_APP_X_NCP_APIGW_API_KEY_ID}`,
+//         "X-NCP-APIGW-API-KEY": `${process.env.REACT_APP_X_NCP_APIGW_API_KEY}`,
 //       },
 //     })
 //     .then((response) => {
@@ -184,25 +166,42 @@ app.get("/naversearch", (req, res) => {
 //     });
 // });
 
-// --------------open API--------------
+app.get("/naversearch", (req, res) => {
+  const value = req.query.searchKeyword;
+  axios
+    .get(`https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode`, {
+      params: {
+        query: value,
+        display: 5,
+      },
+      headers: {
+        "X-NCP-APIGW-API-KEY-ID": `${naverSearch_API_KEY_ID}`,
+        "X-NCP-APIGW-API-KEY": `${naverSearch_API_KEY}`,
+      },
+    })
+    .then((response) => {
+      res.send(response.data.addresses);
+    });
+});
 
-// app.listen(PORT, async () => {
-//   connection = await mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     database: "weatherinfo",
-//     password: "process",
-//     -----------수정할것 --------------
-//   });
-//   console.log("server is running");
-// });
+// --------------open API--------------
 
 app.listen(PORT, async () => {
   connection = await mysql.createConnection({
-    host: "us-cdbr-east-06.cleardb.net",
-    user: "bd371663d09404",
-    database: "heroku_7bf734f26abffb2",
-    password: "1e06943c",
+    host: "localhost",
+    user: "root",
+    database: "weatherinfo",
+    password: `${process.env.REACT_APP_LOCAL_DB_PASSWORD}`,
   });
   console.log("server is running");
 });
+
+// app.listen(PORT, async () => {
+//   connection = await mysql.createConnection({
+//     host: "us-cdbr-east-06.cleardb.net",
+//     user: "bd371663d09404",
+//     database: "heroku_7bf734f26abffb2",
+//     password: "1e06943c",
+//   });
+//   console.log("server is running");
+// });

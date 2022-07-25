@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&family=Quicksand:wght@300&display=swap");
+
 .checkmark {
   background-color: blue;
 }
 
 .localManagementWrap {
   background-color: #010101;
-  height: 109vh;
   position: relative;
+  font-family: "Noto Sans KR", sans-serif;
 
   .navWrap {
     display: flex;
@@ -67,6 +69,7 @@
   .localManagementSectionWrap {
     background-color: #010101;
     padding: 0 3vw;
+    margin-bottom: 9vh;
 
     .Title {
       display: flex;
@@ -81,7 +84,6 @@
       }
     }
     .LocalArea {
-      height: 11vh;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -99,8 +101,8 @@
         border: 2px solid #373737;
         margin-right: 5vw;
         animation-duration: 0.5s;
-        animation-name: deleteOnTop;
         animation-fill-mode: forwards;
+        animation-name: deleteOnTop;
 
         :checked + label::after {
           background-color: blue;
@@ -136,6 +138,7 @@
             > p {
               font-size: 2.5em;
               color: #fff;
+              font-family: "Quicksand", sans-serif;
             }
             > span {
               color: #8e8e8e;

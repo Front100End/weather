@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./css/LocalManagement.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,6 +32,7 @@ const LocalManagement_Section = (props) => {
 
   const month = new Date().getMonth() + 1;
   const date = new Date().getDate();
+  const deleteAni = useRef;
 
   // 날짜,시간 패치
 

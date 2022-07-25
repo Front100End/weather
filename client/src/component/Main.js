@@ -98,7 +98,8 @@ const Main = (props) => {
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className={styles.speechBubble}>
+
+      <div className={styles.speechBubble} key={Math.random()}>
         <li>
           <p>주인님!</p>
         </li>

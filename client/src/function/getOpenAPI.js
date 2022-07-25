@@ -45,22 +45,22 @@ import axios from "axios";
 // -----------------------local--------------------
 
 export const getMainData = () =>
-  axios.get("https://weather-info-korea.herokuapp.com/database");
+  axios.get("https://weather-info-korea.herokuapp.com/maindata");
 export const postMainData = (name, lat, lon) =>
-  axios.post("https://weather-info-korea.herokuapp.com/database", {
+  axios.post("https://weather-info-korea.herokuapp.com/maindata", {
     name: name,
     lat: lat,
     lon: lon,
   });
 export const putMainData = (name, lat, lon, id) =>
-  axios.put("https://weather-info-korea.herokuapp.com/database", {
+  axios.put("https://weather-info-korea.herokuapp.com/maindata", {
     name: name,
     lat: lat,
     lon: lon,
     id: id,
   });
 export const deleteMainData = (id) =>
-  axios.delete(`https://weather-info-korea.herokuapp.com/database/${id}`);
+  axios.delete(`https://weather-info-korea.herokuapp.com/maindata/${id}`);
 
 export const getWeatherData = (lat, lon) =>
   axios.get("https://weather-info-korea.herokuapp.com/weatherinfo", {

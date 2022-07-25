@@ -199,10 +199,10 @@ app.get("/naversearch", (req, res) => {
 
 app.listen(PORT, async () => {
   connection = await mysql.createConnection({
-    host: `${process.env.REACT_APP_HEROKU_HOST}`,
-    user: `${process.env.REACT_APP_HEROKU_USER}`,
-    database: `${process.env.REACT_APP_HEROKU_DB}`,
-    password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
+    host: "us-cdbr-east-06.cleardb.net",
+    user: "bd371663d09404",
+    database: "heroku_7bf734f26abffb2",
+    password: "1e06943c",
   });
   console.log("server is running");
 });

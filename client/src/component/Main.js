@@ -24,7 +24,7 @@ const Main = (props) => {
         width: window.innerWidth,
         height: window.innerHeight,
       });
-    }, 100);
+    });
     useEffect(() => {
       window.addEventListener("resize", resizeHandler);
       return () => {
@@ -52,10 +52,12 @@ const Main = (props) => {
 
   useEffect(() => {
     speechBubble(props.mainWeatherData, speechSetFunction, adviceSetFunction);
-    windowSizeAlert();
   }, [props.mainWeatherData]);
+  useEffect(() => {
+    windowSizeAlert();
+    console.log(windowSize);
+  }, []);
 
-  console.log(windowSize);
   return (
     <div
       className={styles.mainWrap}

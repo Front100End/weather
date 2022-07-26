@@ -10,11 +10,14 @@ import { changeMainLocation } from "../module/weatherReducer";
 
 const Menu_Section = (props) => {
   const dispatch = useDispatch();
-
+  const weatherIconRender = (currentIcon) => {
+    let icon = `https://openweathermap.org/img/wn/${currentIcon}.png`;
+    return icon;
+  };
   return (
     <div className={styles.menuSectionWrap}>
-      <section className={styles.oftenLocalWrap}>
-        <div className={styles.oftenLocalTitle}>
+      <section className={styles.mainLocalWrap}>
+        <div className={styles.mainLocalTitle}>
           <div>
             <FontAwesomeIcon className={styles.starIcon} icon={faStar} />
             <span>즐겨찾는 지역</span>
@@ -25,10 +28,25 @@ const Menu_Section = (props) => {
           />
         </div>
         <div>
-          <h4 className={styles.oftenLocalArea}>
+          <h4
+            className={styles.mainLocalArea}
+            // style={
+            //   props.mainWeatherData.name.length > 10
+            //     ? { fontSize: "1.3em" }
+            //     : { fontSize: "1.5em" }
+            // }
+          >
             {props.mainWeatherData.name}
           </h4>
-          <span>{props.tempRound(props.mainWeatherData.current.temp)}°</span>
+          <p>
+            <img
+              src={weatherIconRender(
+                props.mainWeatherData.current.weather[0].icon
+              )}
+              alt="localweatherIcon error"
+            />
+            <span>{props.tempRound(props.mainWeatherData.current.temp)}°</span>
+          </p>
         </div>
       </section>
 
@@ -52,8 +70,20 @@ const Menu_Section = (props) => {
                 props.toggleBtn();
               }}
             >
-              <h4>{current.name}</h4>
+              <h4
+                style={
+                  current.name.length > 10
+                    ? { fontSize: "1.3em" }
+                    : { fontSize: "1.5em" }
+                }
+              >
+                {current.name}
+              </h4>
               <div className={styles.weatherWrap}>
+                <img
+                  src={weatherIconRender(current.current.weather[0].icon)}
+                  alt="localweatherIcon error"
+                />
                 {props.tempRound(current.current.temp)}°
               </div>
             </button>

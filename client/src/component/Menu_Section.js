@@ -17,7 +17,6 @@ const Menu_Section = (props) => {
   return (
     <div className={styles.menuSectionWrap}>
       <section className={styles.mainLocalWrap}>
-        <hr size="1"></hr>
         <div className={styles.mainLocalTitle}>
           <div>
             <FontAwesomeIcon className={styles.starIcon} icon={faStar} />
@@ -52,8 +51,6 @@ const Menu_Section = (props) => {
       </section>
 
       <section>
-        <hr size="1"></hr>
-
         <div className={styles.localTitle}>
           <FontAwesomeIcon
             className={styles.locationIcon}

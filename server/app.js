@@ -114,13 +114,6 @@ app.delete("/localdata/:id", async (req, res) => {
     console.log((error = err));
   }
 });
-// ------------database mysql -------------
-
-// app.get("/database/:id", (req, res) => {
-//   const id = req.params.id;
-//   const data = database.find((el) => el.id === Number(id));
-//   res.send(data);
-// });
 
 // --------------open API--------------
 

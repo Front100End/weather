@@ -6,7 +6,7 @@ app.use(express.static("build"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const axios = require("axios");
 
 require("dotenv").config();

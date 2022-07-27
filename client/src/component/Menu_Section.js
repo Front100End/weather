@@ -17,6 +17,7 @@ const Menu_Section = (props) => {
   return (
     <div className={styles.menuSectionWrap}>
       <section className={styles.mainLocalWrap}>
+        <hr size="1"></hr>
         <div className={styles.mainLocalTitle}>
           <div>
             <FontAwesomeIcon className={styles.starIcon} icon={faStar} />
@@ -51,6 +52,8 @@ const Menu_Section = (props) => {
       </section>
 
       <section>
+        <hr size="1"></hr>
+
         <div className={styles.localTitle}>
           <FontAwesomeIcon
             className={styles.locationIcon}
@@ -70,15 +73,7 @@ const Menu_Section = (props) => {
                 props.toggleBtn();
               }}
             >
-              <h4
-                style={
-                  current.name.length > 10
-                    ? { fontSize: "1.3em" }
-                    : { fontSize: "1.5em" }
-                }
-              >
-                {current.name}
-              </h4>
+              <h4>{current.name}</h4>
               <div className={styles.weatherWrap}>
                 <img
                   src={weatherIconRender(current.current.weather[0].icon)}

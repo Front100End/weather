@@ -6,9 +6,9 @@ const Clouds = "Clouds";
 const Clear = "Clear";
 
 export const speechBubble = (mainWeatherData, speech, advice) => {
-  console.log(mainWeatherData);
+  // console.log(mainWeatherData);
   let weatherType = mainWeatherData.daily[0].weather[0].main;
-  console.log(weatherType);
+  // console.log(weatherType);
   let hourlyData = mainWeatherData.hourly.splice(1, 10);
 
   if (weatherType === "Rain") {

@@ -1,19 +1,13 @@
 .homeWrap {
   position: relative;
   max-width: 700px;
-  height: 100vh;
   max-height: 1500px;
   margin: 0 auto;
-  background-color: black;
   > div {
     max-height: 1500px;
-    height: 100vh;
-
     display: flex;
     position: absolute;
     width: 180%;
-    height: 100vh;
-    left: -80%;
     top: 0;
   }
 }

@@ -11,12 +11,13 @@ import styles from "./css/Main.module.scss";
 import { speechBubble } from "../function/catSpeechSet";
 
 const Main = (props) => {
+  const [speech, setSpeech] = useState("주인님! 오늘은 비가 올 예정이에요.");
+  const [advice, setAdvice] = useState("");
+
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const [speech, setSpeech] = useState("주인님! 오늘은 비가 올 예정이에요.");
-  const [advice, setAdvice] = useState("");
 
   const ResizedComponent = () => {
     const resizeHandler = debounce(() => {
@@ -53,9 +54,11 @@ const Main = (props) => {
   useEffect(() => {
     speechBubble(props.mainWeatherData, speechSetFunction, adviceSetFunction);
   }, [props.mainWeatherData]);
+  // useEffect(() => {
+  //   console.log(windowSize);
+  // }, [windowSize]);
   useEffect(() => {
     windowSizeAlert();
-    console.log(windowSize);
   }, []);
 
   return (

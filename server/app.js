@@ -28,9 +28,7 @@ require("dotenv").config();
 
 const { response } = require("express");
 
-let connection;
 let pool;
-let promisePool;
 
 // outer API Key
 // const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -46,370 +44,115 @@ app.get("/", function (req, res) {
 
 // ------------database mysql -------------
 
-// app.get("/maindata", async (req, res) => {
-//   try {
-//     const [rows, fields] = await connection.execute(
-//       "SELECT * FROM mainlocation"
-//     );
-//     res.send(rows);
-//   } catch (err) {
-//     console.log("err = ", err);
-//   }
-// });
-// app.post("/maindata", async (req, res) => {
-//   try {
-//     const { name, lat, lon } = req.body;
-//     const [rows, fields] = await connection.execute(
-//       `INSERT INTO mainlocation(name,lat,lon) VALUES(?,?,?)`,
-//       [name, lat, lon]
-//     );
-//     res.send("post값이 정상적으로 추가 되었습니다.");
-//   } catch (err) {
-//     console.log("err = ", err);
-//   }
-// });
-
-// app.put("/maindata", async (req, res) => {
-//   try {
-//     const { name, lat, lon, id } = req.body;
-//     const [rows, fields] = await connection.execute(
-//       `UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?`,
-//       [name, lat, lon, id]
-//     );
-//     res.send("put값이 정상적으로 업데이트 되었습니다.");
-//   } catch (err) {
-//     console.log("err = ", err);
-//   }
-// });
-
-// app.delete("/maindata/:id", async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const [rows, fields] = await connection.execute(
-//       `DELETE FROM mainlocation WHERE id=?`,
-//       [id]
-//     );
-//     res.send("delete 성공");
-//   } catch (err) {
-//     console.log((error = err));
-//   }
-// });
-
-// app.get("/localdata", async (req, res) => {
-//   try {
-//     const [rows, fields] = await connection.execute(
-//       "SELECT * FROM locallocation"
-//     );
-//     res.send(rows);
-//   } catch (err) {
-//     console.log("err = ", err);
-//   }
-// });
-// app.post("/localdata", async (req, res) => {
-//   try {
-//     const { name, lat, lon } = req.body;
-//     const [rows, fields] = await promisePool..execute(
-//       `INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)`,
-//       [name, lat, lon]
-//     );
-//     res.send(rows);
-//   } catch (err) {
-//     console.log("err = ", err);
-//   }
-// });
-
-// app.put("/localdata", async (req, res) => {
-//   try {
-//     const { name, lat, lon, id } = req.body;
-//     const [rows, fields] = await connection.execute(
-//       `UPDATE locallocation SET name=?,lat=?,lon=? WHERE id =?`,
-//       [name, lat, lon, id]
-//     );
-//     res.send("put값이 정상적으로 업데이트 되었습니다.");
-//   } catch (err) {
-//     console.log("err =", err);
-//   }
-// });
-
-// app.delete("/localdata/:id", async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const [rows, fields] = await connection.execute(
-//       `DELETE FROM locallocation WHERE id=?`,
-//       [id]
-//     );
-//     res.send("delete 성공");
-//   } catch (err) {
-//     console.log((error = err));
-//   }
-// });
-
 app.get("/maindata", async (req, res) => {
-  const sql = "SELECT * FROM mainlocation";
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
-      if (err) throw err;
-      connection.query(sql, (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              result,
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
-    });
+    let connection = await pool.getConnection(async (conn) => conn);
+    let [rows] = await connection.query("SELECT * FROM mainlocation");
+    res.send(rows);
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
-  }
-});
-app.post("/maindata", async (req, res) => {
-  const { name, lat, lon } = req.body;
-  const sql = `INSERT INTO mainlocation(name,lat,lon) VALUES(?,?,?)`;
-  try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
-      if (err) throw err;
-      connection.query(sql, [name, lat, lon], (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              message: "post값이 정상적으로 추가 되었습니다.",
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
-    });
-  } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 
 app.put("/maindata", async (req, res) => {
   const { name, lat, lon, id } = req.body;
-  const sql = `UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?`;
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
+    let connection = await pool.getConnection(async (conn) => {
       if (err) throw err;
-      connection.query(sql, [name, lat, lon, id], (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              message: "put값이 정상적으로 업데이트 되었습니다.",
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
+      return conn;
     });
+    let [rows] = await connection.query(
+      "UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?",
+      [name, lat, lon, id]
+    );
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 
 app.delete("/maindata/:id", async (req, res) => {
   const id = req.params.id;
-
-  const sql = `DELETE FROM mainlocation WHERE id=?`;
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
+    let connection = await pool.getConnection(async (conn) => {
       if (err) throw err;
-      connection.query(sql, [id], (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              message: "delete 성공",
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
+      return conn;
     });
+    let [rows] = await connection.query("DELETE FROM mainlocation WHERE id=?", [
+      id,
+    ]);
+    res.send("delete성공");
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 
 app.get("/localdata", async (req, res) => {
-  const sql = "SELECT * FROM locallocation";
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
+    let connection = await pool.getConnection(async (conn) => {
       if (err) throw err;
-      connection.query(sql, (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              result,
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
+      return conn;
     });
+    let [rows] = await connection.query("SELECT * FROM locallocation");
+    res.send(rows);
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 app.post("/localdata", async (req, res) => {
   const { name, lat, lon } = req.body;
-  const sql = `INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)`;
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
+    let connection = await pool.getConnection(async (conn) => {
       if (err) throw err;
-      connection.query(sql, [name, lat, lon], (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              result,
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
+      return conn;
     });
+    let [rows] = await connection.query(
+      "INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)",
+      [name, lat, lon]
+    );
+    res.send(rows);
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 
 app.put("/localdata", async (req, res) => {
   const { name, lat, lon, id } = req.body;
-  const sql = `UPDATE locallocation SET name=?,lat=?,lon=? WHERE id =?`;
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
+    let connection = await pool.getConnection(async (conn) => {
       if (err) throw err;
-      connection.query(sql, [name, lat, lon, id], (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              message: "put값이 정상적으로 업데이트 되었습니다.",
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
+      return conn;
     });
+    let [rows] = await connection.query(
+      "UPDATE locallocation SET name=?,lat=?,lon=? WHERE id =?",
+      [name, lat, lon, id]
+    );
+    res.send("local put값이 정상적으로 업데이트 되었습니다.");
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 
 app.delete("/localdata/:id", async (req, res) => {
   const id = req.params.id;
-  const sql = `DELETE FROM locallocation WHERE id=?`;
   try {
-    pool.getConnection((err, connection) => {
-      // Connection 연결
+    let connection = await pool.getConnection(async (conn) => {
       if (err) throw err;
-      connection.query(sql, [id], (err, result, fields) => {
-        // Query문 전송
-        if (err) {
-          console.error("connection_pool GET Error / " + err);
-          res.status(500).send("message : Internal Server Error");
-        } else {
-          if (result.length === 0) {
-            res.status(400).send({
-              success: false,
-              message: "DB response Not Found",
-            });
-          } else {
-            res.status(200).send({
-              success: true,
-              message: "delete 성공",
-            });
-          }
-        }
-      });
-      pool.releaseConnection(connection); // Connectino Pool 반환
+      return conn;
     });
+    let [rows] = await connection.query(
+      "DELETE FROM locallocation WHERE id=?",
+      [id]
+    );
+    res.send("localdata delete성공");
+    connection.release();
   } catch (err) {
-    console.error("connection_pool GET Error / " + err);
-    res.status(500).send("message : Internal Server Error");
+    console.log("err : ", err);
   }
 });
 
@@ -478,12 +221,14 @@ app.get("/naversearch", (req, res) => {
 // --------------open API--------------
 
 // app.listen(PORT, async () => {
-//   connection = await mysql.createConnection({
+//   pool = await mysql.createPool({
 //     host: "localhost",
 //     user: "root",
 //     database: "weatherinfo",
 //     password: `${process.env.REACT_APP_LOCAL_DB_PASSWORD}`,
+//     connectionLimit: 10,
 //   });
+
 //   console.log("server is running");
 // });
 
@@ -498,12 +243,6 @@ app.get("/naversearch", (req, res) => {
 //   console.log("server is running");
 // });
 app.listen(PORT, async () => {
-  // connection = await mysql.createConnection({
-  // host: `${process.env.REACT_APP_HEROKU_HOST}`,
-  // user: `${process.env.REACT_APP_HEROKU_USER}`,
-  // database: `${process.env.REACT_APP_HEROKU_DB}`,
-  // password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
-  // });
   pool = await mysql.createPool({
     host: `${process.env.REACT_APP_HEROKU_HOST}`,
     user: `${process.env.REACT_APP_HEROKU_USER}`,

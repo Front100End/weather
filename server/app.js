@@ -66,6 +66,7 @@ app.put("/maindata", async (req, res) => {
       "UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?",
       [name, lat, lon, id]
     );
+    res.send("mainlocal put값이 정상적으로 업데이트 되었습니다.");
     connection.release();
   } catch (err) {
     console.log("err : ", err);
@@ -82,7 +83,7 @@ app.delete("/maindata/:id", async (req, res) => {
     let [rows] = await connection.query("DELETE FROM mainlocation WHERE id=?", [
       id,
     ]);
-    res.send("delete성공");
+    res.send("mainlocal delete성공");
     connection.release();
   } catch (err) {
     console.log("err : ", err);

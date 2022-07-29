@@ -27,7 +27,13 @@ require("dotenv").config();
 // app.use(cors(corsOptions));
 
 const { response } = require("express");
-let connection;
+
+let connection = mysql.createConnection({
+  host: `${process.env.REACT_APP_HEROKU_HOST}`,
+  user: `${process.env.REACT_APP_HEROKU_USER}`,
+  database: `${process.env.REACT_APP_HEROKU_DB}`,
+  password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
+});
 
 // outer API Key
 // const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -44,25 +50,39 @@ app.get("/", function (req, res) {
 // ------------database mysql -------------
 
 app.get("/maindata", async (req, res) => {
-  const [rows, fields] = await connection.execute("SELECT * FROM mainlocation");
-  res.send(rows);
+  try {
+    const [rows, fields] = await connection.execute(
+      "SELECT * FROM mainlocation"
+    );
+    res.send(rows);
+  } catch (err) {
+    console.log("err = ", err);
+  }
 });
 app.post("/maindata", async (req, res) => {
-  const { name, lat, lon } = req.body;
-  const [rows, fields] = await connection.execute(
-    `INSERT INTO mainlocation(name,lat,lon) VALUES(?,?,?)`,
-    [name, lat, lon]
-  );
-  res.send("post값이 정상적으로 추가 되었습니다.");
+  try {
+    const { name, lat, lon } = req.body;
+    const [rows, fields] = await connection.execute(
+      `INSERT INTO mainlocation(name,lat,lon) VALUES(?,?,?)`,
+      [name, lat, lon]
+    );
+    res.send("post값이 정상적으로 추가 되었습니다.");
+  } catch (err) {
+    console.log("err = ", err);
+  }
 });
 
 app.put("/maindata", async (req, res) => {
-  const { name, lat, lon, id } = req.body;
-  const [rows, fields] = await connection.execute(
-    `UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?`,
-    [name, lat, lon, id]
-  );
-  res.send("put값이 정상적으로 업데이트 되었습니다.");
+  try {
+    const { name, lat, lon, id } = req.body;
+    const [rows, fields] = await connection.execute(
+      `UPDATE mainlocation SET name=?,lat=?,lon=? WHERE id =?`,
+      [name, lat, lon, id]
+    );
+    res.send("put값이 정상적으로 업데이트 되었습니다.");
+  } catch (err) {
+    console.log("err = ", err);
+  }
 });
 
 app.delete("/maindata/:id", async (req, res) => {
@@ -79,27 +99,39 @@ app.delete("/maindata/:id", async (req, res) => {
 });
 
 app.get("/localdata", async (req, res) => {
-  const [rows, fields] = await connection.execute(
-    "SELECT * FROM locallocation"
-  );
-  res.send(rows);
+  try {
+    const [rows, fields] = await connection.execute(
+      "SELECT * FROM locallocation"
+    );
+    res.send(rows);
+  } catch (err) {
+    console.log("err = ", err);
+  }
 });
 app.post("/localdata", async (req, res) => {
-  const { name, lat, lon } = req.body;
-  const [rows, fields] = await connection.execute(
-    `INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)`,
-    [name, lat, lon]
-  );
-  res.send(rows);
+  try {
+    const { name, lat, lon } = req.body;
+    const [rows, fields] = await connection.execute(
+      `INSERT INTO locallocation(name,lat,lon) VALUES(?,?,?)`,
+      [name, lat, lon]
+    );
+    res.send(rows);
+  } catch (err) {
+    console.log("err = ", err);
+  }
 });
 
 app.put("/localdata", async (req, res) => {
-  const { name, lat, lon, id } = req.body;
-  const [rows, fields] = await connection.execute(
-    `UPDATE locallocation SET name=?,lat=?,lon=? WHERE id =?`,
-    [name, lat, lon, id]
-  );
-  res.send("put값이 정상적으로 업데이트 되었습니다.");
+  try {
+    const { name, lat, lon, id } = req.body;
+    const [rows, fields] = await connection.execute(
+      `UPDATE locallocation SET name=?,lat=?,lon=? WHERE id =?`,
+      [name, lat, lon, id]
+    );
+    res.send("put값이 정상적으로 업데이트 되었습니다.");
+  } catch (err) {
+    console.log("err =", err);
+  }
 });
 
 app.delete("/localdata/:id", async (req, res) => {
@@ -189,12 +221,16 @@ app.get("/naversearch", (req, res) => {
 //   console.log("server is running");
 // });
 
-app.listen(PORT, async () => {
-  connection = await mysql.createConnection({
-    host: `${process.env.REACT_APP_HEROKU_HOST}`,
-    user: `${process.env.REACT_APP_HEROKU_USER}`,
-    database: `${process.env.REACT_APP_HEROKU_DB}`,
-    password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
-  });
+// app.listen(PORT, async () => {
+//   connection = await mysql.createConnection({
+//     host: `${process.env.REACT_APP_HEROKU_HOST}`,
+//     user: `${process.env.REACT_APP_HEROKU_USER}`,
+//     database: `${process.env.REACT_APP_HEROKU_DB}`,
+//     password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
+//   });
+
+//   console.log("server is running");
+// });
+app.listen(PORT, () => {
   console.log("server is running");
 });

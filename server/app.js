@@ -28,12 +28,7 @@ require("dotenv").config();
 
 const { response } = require("express");
 
-let connection = mysql.createConnection({
-  host: `${process.env.REACT_APP_HEROKU_HOST}`,
-  user: `${process.env.REACT_APP_HEROKU_USER}`,
-  database: `${process.env.REACT_APP_HEROKU_DB}`,
-  password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
-});
+let connection;
 
 // outer API Key
 // const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -231,6 +226,12 @@ app.get("/naversearch", (req, res) => {
 
 //   console.log("server is running");
 // });
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  connection = await mysql.createConnection({
+    host: `${process.env.REACT_APP_HEROKU_HOST}`,
+    user: `${process.env.REACT_APP_HEROKU_USER}`,
+    database: `${process.env.REACT_APP_HEROKU_DB}`,
+    password: `${process.env.REACT_APP_HEROKU_PASSWORD}`,
+  });
   console.log("server is running");
 });

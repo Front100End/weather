@@ -30,7 +30,11 @@ const Main_HourlyTemp = (props) => {
   // };
   // ResizedComponent();
 
-  let hourly = props.mainWeatherData.hourly.slice(1, 19);
+  let hourly = props.mainWeatherData.hourly.slice(0, 12);
+
+  useEffect(() => {
+    console.log(props.mainWeatherData.hourly);
+  }, [props.mainWeatherData]);
 
   const unixTimeTransform = (dt) => {
     let UnixTime = new Date(dt * 1000);
@@ -53,7 +57,6 @@ const Main_HourlyTemp = (props) => {
   };
   const weatherIconRender = (currentIcon) => {
     let icon = `https://openweathermap.org/img/wn/${currentIcon}.png`;
-
     return icon;
   };
 

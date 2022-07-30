@@ -97,7 +97,6 @@ const Main = (props) => {
           <SwiperSlide>
             <HourTemp
               tempRound={props.tempRound}
-              hourlyTemp={props.hourlyTemp}
               mainWeatherData={props.mainWeatherData}
             ></HourTemp>
           </SwiperSlide>

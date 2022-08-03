@@ -9,11 +9,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./css/Main.module.scss";
 import { speechBubble } from "../function/catSpeechSet";
+import { backgroundSelect } from "../function/backgroundSet";
 
 const Main = (props) => {
-  const [speech, setSpeech] = useState("주인님! 오늘은 비가 올 예정이에요.");
+  const [speechCurrent, setSpeechCurrent] = useState("");
+  const [speech, setSpeech] = useState("");
   const [advice, setAdvice] = useState("");
-
+  const [background, setBackground] = useState("");
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -34,6 +36,9 @@ const Main = (props) => {
     }, []);
   };
   ResizedComponent();
+  const speechCurrentSetFunction = (description) => {
+    setSpeechCurrent(description);
+  };
 
   const speechSetFunction = (description) => {
     setSpeech(description);
@@ -43,20 +48,28 @@ const Main = (props) => {
     setAdvice(description);
   };
 
+  const backgroundSetFunction = (weather) => {
+    setBackground(weather);
+  };
+
   const windowSizeAlert = () => {
     if (windowSize.width > 1000) {
       alert(
-        "이 서비스는 현재 모바일만을 지원하고 있어요.\n ctrl+Shift+C 및 새로고침을 이용해 모바일 기기로 전환해주세요.\n 더욱 발전하는 Weather 서비스가 되겠습니다."
+        "이 서비스는 현재 모바일만을 지원하고 있어요.\n ctrl+Shift+C (개발자모드) 및 새로고침을 이용해 \n 모바일 기기로 전환해주세요.\n 더욱 발전하는 Weather 서비스가 되겠습니다."
       );
     }
   };
 
   useEffect(() => {
-    speechBubble(props.mainWeatherData, speechSetFunction, adviceSetFunction);
+    speechBubble(
+      props.mainWeatherData,
+      speechCurrentSetFunction,
+      speechSetFunction,
+      adviceSetFunction
+    );
+    backgroundSelect(backgroundSetFunction, props.mainWeatherData);
   }, [props.mainWeatherData]);
-  // useEffect(() => {
-  //   console.log(windowSize);
-  // }, [windowSize]);
+
   useEffect(() => {
     windowSizeAlert();
   }, []);
@@ -67,6 +80,7 @@ const Main = (props) => {
       style={{
         width: `${windowSize.width}px`,
         height: `${windowSize.height}px`,
+        backgroundImage: `url(${background})`,
       }}
     >
       {props.menuState ? (
@@ -107,9 +121,12 @@ const Main = (props) => {
         <li>
           <p>주인님!</p>
         </li>
+        <li>
+          <span>{speechCurrent}</span>
+        </li>
 
         <li>
-          <span>{speech}</span>
+          <em>{speech}</em>
         </li>
         <li>
           <span>{advice}</span>

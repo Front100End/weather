@@ -30,19 +30,18 @@ const Main_HourlyTemp = (props) => {
   // };
   // ResizedComponent();
 
-  let hourly = props.mainWeatherData.hourly.slice(0, 12);
+  const [hourly, setHourly] = useState([]);
 
   useEffect(() => {
-    console.log(props.mainWeatherData.hourly);
+    let temp = props.mainWeatherData.hourly;
+    setHourly(temp.slice(1, 12));
   }, [props.mainWeatherData]);
 
   const unixTimeTransform = (dt) => {
     let UnixTime = new Date(dt * 1000);
     let AMPM = "";
-    let utc = new Date(
-      UnixTime.getTime() + UnixTime.getTimezoneOffset() * 60000
-    );
-    let hour = utc.getHours();
+
+    let hour = UnixTime.getHours();
 
     if (hour < 10) {
       hour = `0${hour}`;

@@ -39,7 +39,10 @@ const Main_CurrentTemp = (props) => {
   };
   return (
     <React.Fragment>
-      <div className={styles.mainCurrentWrap}>
+      <div
+        className={styles.mainCurrentWrap}
+        style={props.fallSomething ? { color: "#fff" } : {}}
+      >
         <div className={styles.container}>
           <div className={styles.info}>
             <h2 className={styles.maintemp}>

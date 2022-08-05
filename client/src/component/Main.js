@@ -20,6 +20,7 @@ const Main = (props) => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [fallSomething, setFallSomething] = useState(false);
 
   const ResizedComponent = () => {
     const resizeHandler = debounce(() => {
@@ -51,6 +52,9 @@ const Main = (props) => {
   const backgroundSetFunction = (weather) => {
     setBackground(weather);
   };
+  const fallSomethingFunction = () => {
+    setFallSomething((current) => !current);
+  };
 
   const windowSizeAlert = () => {
     if (windowSize.width > 1000) {
@@ -67,7 +71,11 @@ const Main = (props) => {
       speechSetFunction,
       adviceSetFunction
     );
-    backgroundSelect(backgroundSetFunction, props.mainWeatherData);
+    backgroundSelect(
+      backgroundSetFunction,
+      fallSomethingFunction,
+      props.mainWeatherData
+    );
   }, [props.mainWeatherData]);
 
   useEffect(() => {
@@ -106,6 +114,7 @@ const Main = (props) => {
               tempRound={props.tempRound}
               loading={props.loading}
               mainWeatherData={props.mainWeatherData}
+              fallSomething={fallSomething}
             ></CurrentTemp>
           </SwiperSlide>
           <SwiperSlide>

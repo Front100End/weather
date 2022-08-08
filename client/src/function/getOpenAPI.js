@@ -46,25 +46,25 @@ import axios from "axios";
 // -----------------------local--------------------
 
 export const getMainData = () =>
-  axios.get("https://weather-info-korea.herokuapp.com/maindata");
+  axios.get("https://nalssidanyang.herokuapp.com/maindata");
 export const postMainData = (name, lat, lon) =>
-  axios.post("https://weather-info-korea.herokuapp.com/maindata", {
+  axios.post("https://nalssidanyang.herokuapp.com/maindata", {
     name: name,
     lat: lat,
     lon: lon,
   });
 export const putMainData = (name, lat, lon, id) =>
-  axios.put("https://weather-info-korea.herokuapp.com/maindata", {
+  axios.put("https://nalssidanyang.herokuapp.com/maindata", {
     name: name,
     lat: lat,
     lon: lon,
     id: id,
   });
 export const deleteMainData = (id) =>
-  axios.delete(`https://weather-info-korea.herokuapp.com/maindata/${id}`);
+  axios.delete(`https://nalssidanyang.herokuapp.com/maindata/${id}`);
 
 export const getWeatherData = (lat, lon) =>
-  axios.get("https://weather-info-korea.herokuapp.com/weatherinfo", {
+  axios.get("https://nalssidanyang.herokuapp.com/weatherinfo", {
     params: {
       x: lat,
       y: lon,
@@ -72,21 +72,21 @@ export const getWeatherData = (lat, lon) =>
   });
 
 export const getLocalData = () =>
-  axios.get("https://weather-info-korea.herokuapp.com/localdata");
+  axios.get("https://nalssidanyang.herokuapp.com/localdata");
 export const postLocalData = (name, lat, lon) =>
-  axios.post("https://weather-info-korea.herokuapp.com/localdata", {
+  axios.post("https://nalssidanyang.herokuapp.com/localdata", {
     name: name,
     lat: lat,
     lon: lon,
   });
 export const putLocalData = (name, lat, lon, id) =>
-  axios.put("https://weather-info-korea.herokuapp.com/localdata", {
+  axios.put("https://nalssidanyang.herokuapp.com/localdata", {
     name: name,
     lat: lat,
     lon: lon,
     id: id,
   });
 export const deleteLocalData = (id) =>
-  axios.delete(`https://weather-info-korea.herokuapp.com/localdata/${id}`);
+  axios.delete(`https://nalssidanyang.herokuapp.com/localdata/${id}`);
 
 // -----------------------------heroku

@@ -26,7 +26,7 @@ const Search = (props) => {
     } else {
       try {
         await axios
-          .get("https://weather-info-korea.herokuapp.com/naversearch", {
+          .get("https://nalssidanyang.herokuapp.com/naversearch", {
             params: {
               searchKeyword: searchKey,
             },

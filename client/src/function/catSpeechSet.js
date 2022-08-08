@@ -23,7 +23,7 @@ export const speechBubble = (
   // 현재 비가 온다면 멈추는 비가 멈추는 시간 계산
   if (CurrentWeatherType === Rain) {
     for (let i = 0; i < 8; i++) {
-      if (hourlyData[i].weather[0].main !== Rain) {
+      if (hourlyData[i].pop < 0.4) {
         RainStopTime = i + 1;
         break;
       }
@@ -31,7 +31,7 @@ export const speechBubble = (
   }
   if (CurrentWeatherType === Snow) {
     for (let i = 0; i < 8; i++) {
-      if (hourlyData[i].weather[0].main !== Snow) {
+      if (hourlyData[i].pop < 0.4) {
         RainStopTime = i + 1;
         break;
       }

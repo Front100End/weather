@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./css/Menu.module.scss";
 import * as api from "../function/getOpenAPI";
@@ -28,16 +28,7 @@ const Menu_Section = (props) => {
           />
         </div>
         <div>
-          <h4
-            className={styles.mainLocalArea}
-            // style={
-            //   props.mainWeatherData.name.length > 10
-            //     ? { fontSize: "1.3em" }
-            //     : { fontSize: "1.5em" }
-            // }
-          >
-            {props.mainWeatherData.name}
-          </h4>
+          <h4 className={styles.mainLocalArea}>{props.mainWeatherData.name}</h4>
           <p>
             <img
               src={weatherIconRender(

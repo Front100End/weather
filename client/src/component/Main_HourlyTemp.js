@@ -3,33 +3,6 @@ import { debounce } from "lodash";
 import styles from "./css/Main.module.scss";
 
 const Main_HourlyTemp = (props) => {
-  // const [windowSize, setWindowSize] = useState({
-  //   width: window.innerWidth,
-  //   height: window.innerHeight,
-  // });
-  // const ResizedComponent = () => {
-  //   const resizeHandler = debounce(() => {
-  //     if (window.innerWidth >= 700) {
-  //       setWindowSize({
-  //         width: "700px",
-  //         height: window.innerHeight,
-  //       });
-  //     } else {
-  //       setWindowSize({
-  //         width: window.innerWidth,
-  //         height: window.innerHeight,
-  //       });
-  //     }
-  //   }, 100);
-  //   useEffect(() => {
-  //     window.addEventListener("resize", resizeHandler);
-  //     return () => {
-  //       window.removeEventListener("resize", resizeHandler);
-  //     };
-  //   }, []);
-  // };
-  // ResizedComponent();
-
   const [hourly, setHourly] = useState([]);
 
   useEffect(() => {

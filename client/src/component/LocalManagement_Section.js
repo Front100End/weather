@@ -59,7 +59,6 @@ const LocalManagement_Section = (props) => {
   // localList longTouch event
 
   const onLongPress = (e) => {
-    console.log("Long pressed.");
     props.changeClickState();
     setDeleteArray([]);
   };
@@ -92,8 +91,6 @@ const LocalManagement_Section = (props) => {
       alert("한개만 선택 해주세요.");
     }
   };
-
-  // const onToggleLongClick = (e) => setLongClick((current) => !current);
 
   useEffect(() => {
     dayFetch();
@@ -141,11 +138,7 @@ const LocalManagement_Section = (props) => {
         {props.localWeatherData.map((current, idx) => {
           return (
             <LongPressable
-              onShortPress={
-                (e) => onShortPress(current)
-                // dispatch(changeMainLocation(current));
-                // navigate(-1);
-              }
+              onShortPress={(e) => onShortPress(current)}
               onLongPress={(e) => {
                 onLongPress();
               }}

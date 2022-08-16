@@ -1,42 +1,19 @@
+let pool;
+const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall`;
+
 const express = require("express");
 const mysql = require("mysql2/promise");
 const app = express();
+const { response } = require("express");
+const axios = require("axios");
 
 app.use(express.static("build"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 5000;
-const axios = require("axios");
 
 require("dotenv").config();
-
-// const cors = require("cors");
-
-// const whitelist = ["http://localhost:3000"];
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not Allowed Origin!"));
-//     }
-//   },
-// };
-// app.use(cors(corsOptions));
-
-const { response } = require("express");
-
-let pool;
-
-// outer API Key
-// const weatherApiKey = process.env.REACT_APP_WEATHER_API_KEY;
-// const naverSearch_API_KEY_ID = process.env.REACT_APP_X_NCP_APIGW_API_KEY_ID;
-// const naverSearch_API_KEY = process.env.REACT_APP_X_NCP_APIGW_API_KEY;
-
-// outer API baseUrl
-const weatherBaseUrl = `https://api.openweathermap.org/data/2.5/onecall`;
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/build/index.html");
@@ -172,6 +149,7 @@ app.delete("/localdata/:id", async (req, res) => {
 
 // --------------open API--------------
 
+//OpenWeatherMAP
 app.get("/weatherinfo", (req, res) => {
   const x = req.query.x;
   const y = req.query.y;
@@ -184,18 +162,7 @@ app.get("/weatherinfo", (req, res) => {
     });
 });
 
-// app.get("/weatherinfo", (req, res) => {
-//   const x = req.query.x;
-//   const y = req.query.y;
-//   axios
-//     .get(
-//       `${weatherBaseUrl}?lat=${x}&lon=${y}&exclude=minutely&appid=${weatherApiKey}`
-//     )
-//     .then((response) => {
-//       res.send(response.data);
-//     });
-// });
-
+//NaverSearch
 app.get("/naversearch", (req, res) => {
   const value = req.query.searchKeyword;
   axios
@@ -214,37 +181,7 @@ app.get("/naversearch", (req, res) => {
     });
 });
 
-// app.get("/naversearch", (req, res) => {
-//   const value = req.query.searchKeyword;
-//   axios
-//     .get(`https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode`, {
-//       params: {
-//         query: value,
-//         display: 5,
-//       },
-//       headers: {
-//         "X-NCP-APIGW-API-KEY-ID": `${naverSearch_API_KEY_ID}`,
-//         "X-NCP-APIGW-API-KEY": `${naverSearch_API_KEY}`,
-//       },
-//     })
-//     .then((response) => {
-//       res.send(response.data.addresses);
-//     });
-// });
-
 // --------------open API--------------
-
-// app.listen(PORT, async () => {
-//   pool = await mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     database: "weatherinfo",
-//     password: `${process.env.REACT_APP_LOCAL_DB_PASSWORD}`,
-//     connectionLimit: 10,
-//   });
-
-//   console.log("server is running");
-// });
 
 app.listen(PORT, async () => {
   pool = await mysql.createPool({

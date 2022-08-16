@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import styles from "./css/Main.module.scss";
 import { speechBubble } from "../function/catSpeechSet";
 import { backgroundSelect } from "../function/backgroundSet";
-import * as api from "../function/getOpenAPI";
 
 const Main = (props) => {
   const [speechCurrent, setSpeechCurrent] = useState("");
@@ -63,11 +62,6 @@ const Main = (props) => {
         "이 서비스는 현재 모바일만을 지원하고 있어요.\n ctrl+Shift+C (개발자모드) 및 새로고침을 이용해 \n 모바일 기기로 전환해주세요.\n 더욱 발전하는 Weather 서비스가 되겠습니다."
       );
     }
-  };
-
-  const buttonClick = async () => {
-    let res = await api.getWeatherData(38.1234, 128.242);
-    console.log(res.data);
   };
 
   useEffect(() => {

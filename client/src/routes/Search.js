@@ -32,7 +32,6 @@ const Search = (props) => {
             },
           })
           .then((response) => {
-            console.log(response.data);
             setLocalData(response.data);
           });
       } catch (err) {
@@ -45,13 +44,6 @@ const Search = (props) => {
       }
     }
   };
-
-  const addLocalData = (name, lat, lon) => ({
-    type: "addLocalData",
-    name: name,
-    lat: lat,
-    lon: lon,
-  });
 
   return (
     <div className={styles.searchWrap}>
@@ -90,7 +82,6 @@ const Search = (props) => {
                 <button
                   key={idx}
                   onClick={async () => {
-                    // console.log(current);
                     try {
                       let insertId;
                       let res = await api.postLocalData(
@@ -99,14 +90,12 @@ const Search = (props) => {
                         current.x
                       );
                       insertId = res.data.insertId;
-                      console.log(insertId);
                       let addWetherdataRes = await api.getWeatherData(
                         current.y,
                         current.x
                       );
                       addWetherdataRes.data.name = current.roadAddress;
                       addWetherdataRes.data.id = insertId;
-                      console.log(addWetherdataRes.data);
                       dispatch(setLocalLocationData(addWetherdataRes.data));
                       navigate(-1);
                     } catch (err) {

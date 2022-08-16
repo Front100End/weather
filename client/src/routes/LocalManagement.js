@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "../component/css/LocalManagement.module.scss";
 import Nav from "../component/LocalManagement_Nav";
 import Section from "../component/LocalManagement_Section";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import * as api from "../function/getOpenAPI";
 
 const Local_Management = (props) => {
   const mainWeatherData = useSelector((state) => state.mainLocationData[0]);
@@ -25,9 +23,6 @@ const Local_Management = (props) => {
 
   return (
     <div className={styles.localManagementWrap}>
-      {/* {loading ? (
-        <div>Is Loading...</div>
-      ) : ( */}
       <React.Fragment>
         <Nav longClick={longClick} changeClickState={changeClickState}></Nav>
         <Section
@@ -40,7 +35,6 @@ const Local_Management = (props) => {
           changeClickState={changeClickState}
         ></Section>
       </React.Fragment>
-      {/* )} */}
     </div>
   );
 };

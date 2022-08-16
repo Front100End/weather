@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Nav from "./Menu_Nav";
 import Section from "./Menu_Section";
 import Footer from "./Menu_Footer";
 import styles from "./css/Menu.module.scss";
-import { useSelector } from "react-redux";
-import * as api from "../function/getOpenAPI";
-import axios from "axios";
 
 const Menu = (props) => {
   return (

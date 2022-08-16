@@ -16,6 +16,9 @@ export const speechBubble = (
   let hourlyData = mainWeatherData.hourly.slice(1, 9);
   let RainStopTime = 0;
   let RainstartTime = 0;
+  speech("");
+  advice("");
+  speechCurrent("");
 
   // 현재 비가 온다면 멈추는 비가 멈추는 시간 계산
   if (CurrentWeatherType === Rain) {

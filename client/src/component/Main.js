@@ -59,7 +59,7 @@ const Main = (props) => {
   const windowSizeAlert = () => {
     if (windowSize.width > 1000) {
       alert(
-        "이 서비스는 현재 모바일만을 지원하고 있어요.\n ctrl+Shift+C (개발자모드) 및 새로고침을 이용해 \n 모바일 기기로 전환해주세요.\n 더욱 발전하는 Weather 서비스가 되겠습니다."
+        "이 서비스는 현재 모바일만을 지원하고 있어요.\n ctrl+Shift+C (개발자모드) 및 새로고침을 이용해 \n 모바일 기기로 전환해주세요.\n 더욱 발전하는 날씨다냥이 되겠습니다."
       );
     }
   };

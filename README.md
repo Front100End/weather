@@ -1,5 +1,5 @@
 포트폴리오 설명 : https://url.kr/v185or //Notion  
-서비스 URL : https://nalssidanayang.heroku.com  
+서비스 URL : https://nalssidanyang.herokuapp.com/   
 
 -파일 트리
 📦weatherinfo  
